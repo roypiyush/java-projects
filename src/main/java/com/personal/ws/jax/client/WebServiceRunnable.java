@@ -3,8 +3,9 @@ package com.personal.ws.jax.client;
 import javax.xml.namespace.QName;
 
 
-
+@SuppressWarnings("unused")
 public class WebServiceRunnable implements Runnable {
+
 
 	private String wsdlDocumentLocation;
 	private QName serviceName;

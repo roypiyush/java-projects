@@ -17,6 +17,7 @@ import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsParameters;
 import com.sun.net.httpserver.HttpsServer;
 
+@SuppressWarnings("restriction")
 public class HTTPSWebService {
 
 	public static void main(String[] args) {

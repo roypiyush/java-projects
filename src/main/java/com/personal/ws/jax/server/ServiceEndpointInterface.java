@@ -6,6 +6,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
 //Service Endpoint Interface
+@SuppressWarnings("restriction")
 @WebService
 @SOAPBinding(style = Style.DOCUMENT)
 // optional

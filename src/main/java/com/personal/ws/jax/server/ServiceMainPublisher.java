@@ -11,6 +11,7 @@ import javax.xml.ws.Endpoint;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
+@SuppressWarnings("restriction")
 public class ServiceMainPublisher {
 
 	/**

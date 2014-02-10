@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class MakeProcessorBusy {
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		
 		Date date = new Date(2013, 9, 16, 18, 38);

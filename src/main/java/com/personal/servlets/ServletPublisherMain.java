@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
+@SuppressWarnings("restriction")
 public class ServletPublisherMain {
 
 	public static void main(String[] args) {

@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import javax.jws.WebService;
 
 //Service Implementation
+@SuppressWarnings("restriction")
 @WebService(name = "ServiceEndpointImpl")
 public class ServiceEndpointImplementation implements ServiceEndpointInterface {
 
