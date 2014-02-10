@@ -2,24 +2,20 @@ package com.personal.threading.ipc;
 
 public class Consumer implements Runnable {
 
-	private DataModel model;
+	private ModelData modelData;
 
-	public Consumer(DataModel model) {
-		this.model = model;
+	public Consumer(ModelData modelData) {
+		this.modelData = modelData;
 	}
 
 	public void run() {
-		synchronized (model) {
-			while (model.getData() < 10) {
-				System.err.println("Consumed : " + model.getData());
-				model.notify();
-				try {
-					model.wait(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
+
+		while (true) {
+
+			modelData.consume(); 
+
 		}
+
 	}
 
 }
