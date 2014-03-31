@@ -1,6 +1,6 @@
 package com.personal.algo.dynamicprogramming;
 
-import com.personal.algo.lcs.MatrixPrint;
+import com.personal.algo.dynamicprogramming.lcs.MatrixPrint;
 
 public class LongestCommonSubString {
 
@@ -23,7 +23,6 @@ public class LongestCommonSubString {
 		
 		int max = 0;
 		int maxi = 0;
-		int maxj = 0;
 		for(int i=1; i <= x ; i++)
 		{
 			for(int j=1; j <= y; j++)
@@ -37,14 +36,13 @@ public class LongestCommonSubString {
 				{
 					max = c[i][j];
 					maxi = i;
-					maxj = j;
 				}
 				
 			}
 		}
 		
 		MatrixPrint.print(c);
-		System.out.println(String.format("max=%d, maxi=%d, maxj=%d", max, maxi, maxj));
+		System.out.println(String.format("max=%d, maxi=%d, max, maxi"));
 		
 		printSubString(X, maxi, max);
 		
