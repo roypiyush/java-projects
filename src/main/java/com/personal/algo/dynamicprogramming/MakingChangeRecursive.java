@@ -38,7 +38,7 @@ public class MakingChangeRecursive {
 	private static int makingChangeWithDP(int[] a, int sum, int r[]) {
 		
 		if(r[sum] >= 0)
-			return sum;
+			return r[sum];
 		
 		int min = sum;
 		
@@ -46,11 +46,11 @@ public class MakingChangeRecursive {
 			
 			if(sum - a[i] >= 0)
 			
-			min = Math.min(min, makingChange(a, sum - a[i]));
+			min = Math.min(min, makingChangeWithDP(a, sum - a[i],r));
 		}
 		
 		
-		// No change occured
+		// No change occurred
 		if(sum == min)
 			return sum;
 		
