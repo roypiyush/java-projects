@@ -55,6 +55,7 @@ public class MaximumContiguousSubsequence {
 		System.out.println("max = " + max);
 	}
 
+	@SuppressWarnings("unused")
 	private static int findMaxSubsequence(int[] A, int i, int j) {
 
 		if (i > j)

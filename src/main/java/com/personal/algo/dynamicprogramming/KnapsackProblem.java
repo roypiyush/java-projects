@@ -8,9 +8,9 @@ public class KnapsackProblem {
 		int wt[] = { 10, 20, 30 };
 		int W = 50;
 
-		long start = System.currentTimeMillis();
+		long start = System.nanoTime();
 		int value = knapsack(val, wt, W);
-		long end = System.currentTimeMillis();
+		long end = System.nanoTime();
 
 		System.out.println(String.format("Max Value = %d    Running time: %d",
 				value, end - start));
@@ -23,9 +23,9 @@ public class KnapsackProblem {
 				R[i] = 0;
 		}
 
-		start = System.currentTimeMillis();
+		start = System.nanoTime();
 		value = knapsackWithDP(val, wt, W, R);
-		end = System.currentTimeMillis();
+		end = System.nanoTime();
 
 		System.out.println(String.format("Max Value = %d    Running time: %d",
 				value, end - start));
