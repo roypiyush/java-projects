@@ -67,8 +67,6 @@ public class LongestCommonSubsequence {
 			}
 		}
 
-		// printSequenceString(X, c,m,n);
-
 		lcsStructure.setLCS(LCS);
 		lcsStructure.setLetters(c);
 
