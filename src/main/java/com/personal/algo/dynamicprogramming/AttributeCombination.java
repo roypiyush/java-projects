@@ -99,7 +99,10 @@ public class AttributeCombination {
 		map.put("brand", Arrays.asList(brand.split(" ")));
 
 //		new AttributeCombination().printCombinations(map, attributes);
+		long startTime = System.currentTimeMillis();
 		printAttributes(map, attributes);
+		long endTime = System.currentTimeMillis();
+		System.out.println(String.format("Time required: %s", (endTime - startTime)));
 		
 
 	}
