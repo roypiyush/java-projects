@@ -3,6 +3,7 @@ package com.personal.algo.dynamicprogramming;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,13 @@ class Activity implements Comparable<Activity> {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "Activity [color=" + color + ", startTime=" + startTime
+				+ ", finishTime=" + finishTime + ", index=" + index
+				+ ", value=" + value + "]";
 	}
 
 	public int compareTo(Activity i) {
@@ -176,6 +184,9 @@ public class ActivitySelectorProblem {
 
 		return compatible;
 	}
+	
+	
+	
 
 	public static void main(String[] args) {
 		int[] s = { 1, 3, 0, 5, 3, 5, 6, 8, 8, 2, 12 };
@@ -202,8 +213,15 @@ public class ActivitySelectorProblem {
 		for (int i = 0; i < f.length; i++) {
 			Activity activity = new Activity(0, s[i], f[i], i, (int)(Math.random() * 20));
 			activityList.add(activity);
+			System.out.println(activity);
 		}
 
+		System.out.println(String.format("Max Valued Activities: %d", new ActivitySelectorProblem().maxValuedActivities(activityList, 0, activityList.size() - 1)));
+	}
+
+	private int maxValuedActivities(List<Activity> activityList, int i, int j) {
+		// TODO Auto-generated method stub
+		return -1;
 	}
 
 }
