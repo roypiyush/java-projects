@@ -1,15 +1,18 @@
 package com.personal.processor;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class MakeProcessorBusy {
 
-	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		
-		Date date = new Date(2013, 9, 16, 18, 38);
+		Calendar calendar = Calendar.getInstance();
+		Date date = calendar.getTime();
+		calendar.setTimeInMillis(date.getTime() + 10000);
 		
-		long timeToStop = date.getTime();
+		
+		long timeToStop = calendar.getTimeInMillis();
 				
 		int processors = Runtime.getRuntime().availableProcessors();
 		
