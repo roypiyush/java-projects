@@ -1,5 +1,7 @@
 package com.personal.test;
 
+import java.math.BigInteger;
+
 public class TestMain {
 
 	public TestMain() {
@@ -54,11 +56,16 @@ public class TestMain {
 
 		System.out.println(s1.hashCode() + " : " + s2.hashCode());
 
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		System.out.println(Integer.MAX_VALUE);
+		System.out.println(Long.MAX_VALUE);
+		long l1 = 999983;
+		
+		System.out.println(l1 * l1);
+		System.out.println(new BigInteger("999983").mod(new BigInteger("999983")));
+		
+		
+		
+		
 
 	}
 
