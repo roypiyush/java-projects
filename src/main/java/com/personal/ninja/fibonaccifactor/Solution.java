@@ -1,4 +1,4 @@
-package com.personal.test;
+package com.personal.ninja.fibonaccifactor;
 
 import java.io.BufferedInputStream;
 import java.math.BigInteger;
