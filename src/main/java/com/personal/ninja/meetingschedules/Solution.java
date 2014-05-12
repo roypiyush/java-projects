@@ -168,8 +168,6 @@ public class Solution {
 		int bookingMinutes = 0;
 		
 		ArrayList<Slot> slots = new ArrayList<Slot>();
-//		slots.add();
-//		slots.add(new Slot(new Time(24, 0), new Time(24, 0)));
 		
 		Scanner sc = null;
 		try {
