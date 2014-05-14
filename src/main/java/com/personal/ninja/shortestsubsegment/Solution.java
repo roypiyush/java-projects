@@ -1,15 +1,21 @@
 package com.personal.ninja.shortestsubsegment;
 import java.io.BufferedInputStream;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Index {
 	private int startIndex;
 	private int endIndex;
+	
+	public Index(int startIndex, int endIndex) {
+		super();
+		this.startIndex = startIndex;
+		this.endIndex = endIndex;
+	}
 	
 	public int getStartIndex() {
 		return startIndex;
@@ -29,86 +35,114 @@ class Index {
 	}
 	
 	public int getDistance() {
-		if(endIndex >= startIndex)
+		if(endIndex > startIndex)
 			return endIndex - startIndex + 1;
 		else
 			return Integer.MAX_VALUE;
+	}
+	public String toString() {
+		return String.format("(%d, %d)", startIndex, endIndex);
 	}
 }
 
 
 public class Solution {
 	
+	public Index minimumSegment(String paragraph[], Set<String> wordMap, int end, Index[] table) {
 
-	public void minSegment(String paragraph[], Map<String, Boolean> wordMap) {
-		
-		int minLength = Integer.MAX_VALUE;
-		Index minSegment = null;
-		
-		for (int i = 0; i <= paragraph.length - wordMap.size(); i++) {
-			
-			Index segment = segment(paragraph, new HashMap<String, Boolean>(wordMap), i);
-			
-			if(segment == null && minSegment == null) {
-				System.out.println("NO SUBSEGMENT FOUND");
-				return;
-			}
-			
-			if (segment != null) {
-				if (segment.getDistance() == wordMap.size()) {
-					// this would be minimum length that can be obtained
-					minSegment = segment;
-					minLength = segment.getDistance();
-					break;
-				}
-				if (segment.getDistance() < minLength) {
-					minSegment = segment;
-					minLength = segment.getDistance();
-				}
-				
-			}
+		if(end >= paragraph.length) {
+			return null;
+		}
+
+		if(table[end] != null) {
+			return table[end];
 		}
 		
-		for (int i = minSegment.getStartIndex(); i <= minSegment.getEndIndex(); i++) {
-			System.out.print(paragraph[i] + (i == (paragraph.length - 1) ? "" : " "));
+		int i = checkWordExistence(paragraph, wordMap , end);
+		Index index1 = null;
+		Index index = null;
+		
+		if (i == -1) {
+			// then increase the index and then search
+			index1 = minimumSegment(paragraph, wordMap, end + 1, table);
+		} 
+		else {
+			// found
+			index = new Index(i, end);
+			
+			
+			if (end + 1 < paragraph.length)
+				index1 = minimumSegment(paragraph, wordMap, end + 1, table);
+
 		}
+
+		table[end] = findMinimumIndex(index, index1);
+		return table[end];
+		
 		
 	}
-	
-	public Index segment(String paragraph[], Map<String, Boolean> wordMap, int start) {
-		
-		Index index = new Index();
-		index.setStartIndex(start);
-		index.setEndIndex(start);
-		
-		
-		int matched = 0;
-		
-		while(index.getEndIndex() < paragraph.length) {
+
+	private Index findMinimumIndex(Index index, Index index1) {
+		if (index1 != null && index != null) { 
 			
-			
-			Boolean isMatched = wordMap.get(paragraph[index.getEndIndex()].toLowerCase());
-			if(isMatched != null && !isMatched) {
-				matched = matched + 1;
-				wordMap.put(paragraph[index.getEndIndex()].toLowerCase(), !isMatched);
-			}
-			
-			if(matched == wordMap.size()) {
-				// All of words got matched
+			if(index1.getDistance() < index.getDistance()) {
+				return index1;
+			} 
+			else if(index1.getDistance() > index.getDistance()) {
 				return index;
 			}
+			else {
+				if(index.getEndIndex() < index1.getEndIndex()) {
+					return index;
+				}
+				else {
+					return index1;
+				}
+			}
+		}
+		else if (index1 != null && index == null) {
+			return index1;
+		} 
+		else if (index1 == null && index != null) {
+			return index;
+		} 
+		else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param paragraph
+	 * @param wordMap
+	 * @param start
+	 * @param end
+	 * 
+	 * @return the start index
+	 * or else -1 NO SUBSEGMENT FOUND
+	 */
+	public int checkWordExistence(String paragraph[], Set<String> remainingWords, int end) {
+		
+		if(end >= paragraph.length) {
+			return -1;
+		}
+		
+		// Either Segment can exist or does not exist
+		Set<String> rw = new HashSet<String>(remainingWords);
+		
+		for(int i = end; i >= 0; i--) {
 			
-			index.incrementEnd();
+			String word = paragraph[i].toLowerCase();
+			rw.remove(word);
+		
+			if(rw.size() == 0) {
+				// All of words got matched
+				return i;
+			}
 			
 		} 
 		
-		if(matched < wordMap.size()) {
-			return null;
-		}
-		
-		
-		
-		return null;
+		return -1;
 	}
 
 
@@ -119,7 +153,7 @@ public class Solution {
 		
 		LinkedList<String> paragraph = new LinkedList<String>();
 
-		Map<String, Boolean> wordMap = new HashMap<String, Boolean>();
+		Set<String> wordSet = new HashSet<String>();
 		
 		Scanner sc = null;
 		try {
@@ -145,7 +179,7 @@ public class Solution {
 				try {
 					
 					String singleWord = sc.nextLine().trim(); 
-					wordMap.put(singleWord, new Boolean(false));
+					wordSet.add(singleWord);
 
 				} catch (Exception e) {
 					System.out.println(String.format("Cannot accept input due to %s", e.getMessage()));
@@ -164,14 +198,29 @@ public class Solution {
 				sc.close();
 			}
 		}
+
 		
-		// long startTime = System.currentTimeMillis();
-		solution.minSegment(paragraph.toArray(new String[paragraph.size()]), wordMap);
-		// long endTime = System.currentTimeMillis();
+		Index[] table = new Index[paragraph.size()];
+		for (int i = 0; i < table.length; i++) {
+			table[i] = null;
+		}
 		
-		// System.out.println(endTime - startTime);
+		Index minSegment = solution.minimumSegment(paragraph.toArray(new String[paragraph.size()]), wordSet, wordSet.size() - 1, table);
+
+		if(minSegment == null) {
+			System.out.println("NO SUBSEGMENT FOUND");
+			return;
+		}
+
+		for(int i = minSegment.getStartIndex(); i <= minSegment.getEndIndex(); i++) {
+			
+			System.out.print(paragraph.get(i) + ( i == minSegment.getEndIndex() ? "" : " "));
+			
+		} 
 		
 		
 	}
+
+	
 
 }
