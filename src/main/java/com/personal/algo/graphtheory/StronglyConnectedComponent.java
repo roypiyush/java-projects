@@ -41,7 +41,7 @@ public class StronglyConnectedComponent {
 		vertex.setColor(Color.BLACK);
 		
 		if(isTranspose)
-		System.out.print(vertex.getId() + " ");
+		System.out.print((char)(vertex.getId() + 97));
 		
 		String adjList = adjMatrix[vertex.getId()];
 		
@@ -87,11 +87,14 @@ public class StronglyConnectedComponent {
 	
 	public static void main(String[] args) {
 		String[] adjMatrix = {
-				"00110",
-				"10000",
-				"01000",
-				"00001",
-				"00000"};
+				"01000000",
+				"00101100",
+				"00010010",
+				"00100001",
+				"10000100",
+				"00000010",
+				"00000101",
+				"00000001"};
 		
 		StronglyConnectedComponent scc = new StronglyConnectedComponent();
 		
