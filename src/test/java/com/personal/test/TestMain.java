@@ -24,6 +24,11 @@ public class TestMain {
 		System.out.println("Calling finalize");
 	}
 
+	private char defaultChar;
+	public void printDefaultChar() {
+		System.out.println("Printing default char: " + defaultChar);
+	}
+	
 	/**
 	 * @param args
 	 */
@@ -37,7 +42,7 @@ public class TestMain {
 			}
 		});
 
-		new TestMain();
+		TestMain main = new TestMain();
 
 		// Runtime runtime = Runtime.getRuntime();
 		// runtime.addShutdownHook(new Thread(){
@@ -64,7 +69,7 @@ public class TestMain {
 		System.out.println(new BigInteger("999983").mod(new BigInteger("999983")));
 		
 		
-		
+		main.printDefaultChar();
 		
 
 	}

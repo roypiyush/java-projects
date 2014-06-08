@@ -8,7 +8,7 @@ public class ResponseHandler implements Observer {
     public void update(Observable obj, Object arg) {
         if (arg instanceof String) {
             resp = (String) arg;
-            System.out.println("\nReceived Response: " + resp );
+            System.out.println("\nReceived Response: " + resp + " From " + obj.getClass().getName());
         }
     }
 }
