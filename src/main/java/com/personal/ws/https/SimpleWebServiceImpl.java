@@ -8,7 +8,6 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
-@SuppressWarnings("restriction")
 @WebService
 public class SimpleWebServiceImpl {
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class PrimeFactorization {
 
 	private Map<Integer, Integer> primeFactors = new HashMap<Integer, Integer>();
@@ -17,6 +18,7 @@ public class PrimeFactorization {
 		this.primeFactors = primeFactors;
 	}
 
+	
 	private void addToMap(int i) {
 		
 		if(primeFactors.get(i) != null) {

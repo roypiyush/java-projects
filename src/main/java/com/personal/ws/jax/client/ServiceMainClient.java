@@ -72,7 +72,6 @@ public class ServiceMainClient {
 		return runnable1;
 	}
 
-	@SuppressWarnings("restriction")
 	static void test() throws MalformedURLException {
 		URL wsdlDocumentLocation = new URL("http://localhost:8910/hello?wsdl");
 		QName serviceName = new QName("http://server.jax.ws.personal.com/",
