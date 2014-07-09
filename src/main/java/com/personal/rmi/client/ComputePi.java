@@ -6,6 +6,11 @@ import java.rmi.registry.Registry;
 
 import com.personal.rmi.server.interfaces.Compute;
 
+/*
+ * java -Djava.a.rmi.server.hostname=127.0.0.1 -Djava.security.policy=server.policy com.personal.rmi.client.ComputePi <hostname> <input> 
+ * 
+ */
+
 public class ComputePi {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void main(String args[]) {

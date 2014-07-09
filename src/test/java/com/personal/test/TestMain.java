@@ -1,7 +1,5 @@
 package com.personal.test;
 
-import java.math.BigInteger;
-
 public class TestMain {
 
 	public TestMain() {
@@ -29,9 +27,22 @@ public class TestMain {
 		System.out.println("Printing default char: " + defaultChar);
 	}
 	
+	Thread thread = new Thread(new Runnable() {
+		
+		@Override
+		public void run() {
+			System.out.println("Running from extra thread");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	});
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 
 		Runtime runtime = Runtime.getRuntime();
@@ -41,37 +52,35 @@ public class TestMain {
 				System.out.println("Inside Add Shutdown Hook");
 			}
 		});
-
+		
 		TestMain main = new TestMain();
 
-		// Runtime runtime = Runtime.getRuntime();
-		// runtime.addShutdownHook(new Thread(){
-		// @Override
-		// public void run() {
-		// System.out.println("Running Shutdown hook");
-		// }
-		// });
-		//
-		// System.out.println("Running main");
-
+		
+		
 		String s1 = "Piyush";
 		String s2 = new String("Piyush");
 
 		System.out.println(s1 == s2);
-
 		System.out.println(s1.hashCode() + " : " + s2.hashCode());
-
-		System.out.println(Integer.MAX_VALUE);
-		System.out.println(Long.MAX_VALUE);
-		long l1 = 999983;
-		
-		System.out.println(l1 * l1);
-		System.out.println(new BigInteger("999983").mod(new BigInteger("999983")));
-		
 		
 		main.printDefaultChar();
 		
-
+		try {
+			main.thread.start();  // Wait for this thread to die
+			main.thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		MyLabel : {
+			int value = -11;
+			System.out.println(Integer.toBinaryString(value));
+			System.out.println(Integer.toBinaryString(value << 2));
+			System.out.println(Integer.toBinaryString(value >> 2));
+			System.out.println(Integer.toBinaryString(value >>> 2));
+		}
+		
+		
 	}
 
 }

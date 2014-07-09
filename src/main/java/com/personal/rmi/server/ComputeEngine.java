@@ -8,6 +8,15 @@ import java.rmi.server.UnicastRemoteObject;
 import com.personal.rmi.server.interfaces.Compute;
 import com.personal.rmi.server.interfaces.Task;
 
+
+/* Start rmiregistry first 
+ * $ rmiregistry
+ *  
+ * $ java -Djava.a.rmi.server.hostname=127.0.0.1 -Djava.security.policy=server.policy com.personal.rmi.server.ComputeEngine
+ * 
+ */
+
+
 @SuppressWarnings("rawtypes")
 public class ComputeEngine implements Compute {
 
