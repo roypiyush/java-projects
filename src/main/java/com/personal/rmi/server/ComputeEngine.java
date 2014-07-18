@@ -9,10 +9,13 @@ import com.personal.rmi.server.interfaces.Compute;
 import com.personal.rmi.server.interfaces.Task;
 
 
-/* Start rmiregistry first 
+/* 
+ * On same shell window run following commands
+ * 
+ * Start rmiregistry first 
  * $ rmiregistry
  *  
- * $ java -Djava.a.rmi.server.hostname=127.0.0.1 -Djava.security.policy=server.policy com.personal.rmi.server.ComputeEngine
+ * $ java -Djava.rmi.server.hostname=127.0.0.1 -Djava.security.policy=server.policy com.personal.rmi.server.ComputeEngine
  * 
  */
 
