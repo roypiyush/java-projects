@@ -10,7 +10,8 @@ public class Vertex {
 	private Color color = Color.WHITE;
 	private int startTime;
 	private int endTime;
-	
+	private int key;
+	private int parent; // another id
 	
 	public int getId() {
 		return id;
@@ -36,7 +37,18 @@ public class Vertex {
 	public void setEndTime(int endTime) {
 		this.endTime = endTime;
 	}
-	
+	public int getKey() {
+		return key;
+	}
+	public void setKey(int key) {
+		this.key = key;
+	}
+	public int getParent() {
+		return parent;
+	}
+	public void setParent(int parent) {
+		this.parent = parent;
+	}
 	@Override
 	public boolean equals(Object vertex) {
 		if(vertex instanceof Vertex) {
@@ -49,9 +61,7 @@ public class Vertex {
 	@Override
 	public String toString() {
 		return "Vertex [id=" + id + ", color=" + color + ", startTime="
-				+ startTime + ", endTime=" + endTime + "]";
+				+ startTime + ", endTime=" + endTime + ", key=" + key + "]";
 	}
 	
-	
-
 }
