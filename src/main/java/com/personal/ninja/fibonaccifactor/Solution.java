@@ -1,6 +1,7 @@
 package com.personal.ninja.fibonaccifactor;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Solution {
@@ -67,8 +68,10 @@ public class Solution {
 		Solution solution = new Solution();
 
 		Scanner sc = null;
+		BufferedInputStream stream = null;
 		try {
-			sc = new Scanner(new BufferedInputStream(System.in));
+			stream = new BufferedInputStream(System.in);
+			sc = new Scanner(stream);
 
 			int numberOfTestCases = Integer.parseInt(sc.nextLine());
 
@@ -81,6 +84,12 @@ public class Solution {
 			System.out
 					.println(String.format("Error due to %s", e.getMessage()));
 		} finally {
+			if(stream != null)
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			if (sc != null) {
 				sc.close();
 			}
