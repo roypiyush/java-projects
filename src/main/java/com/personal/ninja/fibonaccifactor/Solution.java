@@ -1,128 +1,99 @@
 package com.personal.ninja.fibonaccifactor;
 
 import java.io.BufferedInputStream;
-import java.math.BigInteger;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Solution {
 
-	
-	public void process(int N) {
+	public long gcd(long number1, long number2) {
+		long divisor ;
+		long dividend ;
 		
-		if(N < 2 || N > 1000000 )
-			return;
-		
-		int minPrime = Integer.MAX_VALUE;
-		int sqrt = (int) Math.sqrt(N);
-
-		if(N % 2 == 0)
-	    {
-			minPrime = 2;
-			
-	    } 
+		if(number1 < number2) {
+			divisor = number1;
+			dividend = number2;
+		}
 		else {
-
-			for(int i = 3; i <= sqrt; i++) {
-				
-				while(N % i == 0) {
-					N = N / i;
-					
-					if(i < minPrime)
-						minPrime = i;
-				}
-			}
+			divisor = number2;
+			dividend = number1;
 		}
 		
+		while(divisor > 0) {
+			long temp = divisor;
+			divisor = dividend % divisor;
+			dividend = temp;
+		}
 		
-		BigInteger d = new BigInteger(Integer.toString(minPrime));
+		return dividend;
+	}
+	
+	private boolean primalityCheck(long n) {
 		
-		BigInteger fib = new BigInteger("1");
-		BigInteger prev = new BigInteger("1");
+		if(n == 2)
+			return true;
 		
-		while (fib.compareTo(new BigInteger("1000000000000000000")) < 0) {
-			BigInteger t = fib;
-			
+		long v = (long)Math.sqrt(n) + 1;
+		
+		for (int i = 2; i <= v; i++) {
+			if(n % i == 0)
+				return false;
+		}
+		return true;
+	}
+	
+	public void process(long N) {
+
+		long fib = 1L;
+		long prev = 1L;
+
+		while (fib < Long.MAX_VALUE) {
+			long t = fib;
+
 			// Generate next fib
-			fib = prev.add(fib);
+			fib = prev + fib;
 			prev = t;
-			
 
-			// Finding factor of Fib
-			if(fib.mod(d).compareTo(new BigInteger("0")) == 0) {
-				System.out.println(String.format("%d %d", fib, d));
-				return;
+			long value = gcd(fib, N);
+			if(value > 1 && primalityCheck(value)) {
+				System.out.println(fib + " " + value);
+				break;
 			}
-			
+
 		}
 	}
-	
-	public void createNumberSet(List<Integer> integers, String line) {
-		
-		Integer integer = null;
-		try {
-			
-			integer = new Integer(line);
-			integers.add(integer);
-			
-		} catch (Exception e) {
-			System.out.println(String.format("Cannot Process Non BigInteger [%s] due to %s", integer, e.getMessage()));
-		}
-	}
-	
-	
-	public static void main(String[] args){
-		
+
+	public static void main(String[] args) {
+
 		Solution solution = new Solution();
-		List<Integer> integers = new LinkedList<Integer>();
-		
-		
-		
-		
-		Scanner sc = null;
-		try {
-			sc = new Scanner(new BufferedInputStream(System.in));
-			
-			int numberOfTestCases = 1;
-			int count = 0;
-			while (count < numberOfTestCases + 1 && sc.hasNextLine()) {
-				try {
-					
-					String integer = sc.nextLine().trim();
-					
-					if(integer.isEmpty())
-					{
-						break;
-					}
-					if(count > 0)
-						solution.createNumberSet(integers, integer);
-					else 
-						numberOfTestCases = new Integer(integer);
 
-				} catch (Exception e) {
-					System.out.println(String.format("Cannot accept input due to %s", e.getMessage()));
-					return;
-				}
-				
-				count++;
+		Scanner sc = null;
+		BufferedInputStream stream = null;
+		try {
+			stream = new BufferedInputStream(System.in);
+			sc = new Scanner(stream);
+
+			int numberOfTestCases = Integer.parseInt(sc.nextLine());
+
+			while (numberOfTestCases-- > 0) {
+
+				long integer = Long.parseLong(sc.nextLine().trim());
+				solution.process(integer);
 			}
 		} catch (Exception e) {
-			System.out.println(String.format("Error due to %s", e.getMessage()));
+			System.out
+					.println(String.format("Error due to %s", e.getMessage()));
 		} finally {
-			if(sc != null) {
+			if(stream != null)
+				try {
+					stream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			if (sc != null) {
 				sc.close();
 			}
 		}
-
-		
-		
-		for (Iterator<Integer> iterator = integers.iterator(); iterator.hasNext();) {
-			Integer integer = iterator.next();
-			solution.process(integer);
-		}
-		
 	}
 
 }
