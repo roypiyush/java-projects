@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.personal.test;
+package com.personal.tricks;
 
 interface RequestProcessor<R> {
 	public void processRequest();

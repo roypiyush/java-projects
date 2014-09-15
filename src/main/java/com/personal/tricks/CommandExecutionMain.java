@@ -1,4 +1,4 @@
-package com.personal.test;
+package com.personal.tricks;
 
 import java.io.IOException;
 import java.io.InputStream;

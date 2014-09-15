@@ -1,4 +1,4 @@
-package com.personal.test;
+package com.personal.tricks;
 
 public class BitOperations {
 
