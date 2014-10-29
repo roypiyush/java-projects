@@ -22,7 +22,13 @@ public class DataProcessor implements
 		perform();
 	}
 
+	@SuppressWarnings("static-access")
 	private void perform() {
+		try {
+			Thread.currentThread().sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		result = "Hello World JAX-WS " + param;
 	}
 

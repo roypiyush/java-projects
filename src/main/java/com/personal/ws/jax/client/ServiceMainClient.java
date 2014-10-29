@@ -32,7 +32,7 @@ public class ServiceMainClient {
 		QName portName = new QName("http://server.jax.ws.personal.com/",
 				"ServiceEndpointImplPort");
 
-		int threadCount = 500;
+		int threadCount = 1;
 		WebServiceRunnable[] runnable = new WebServiceRunnable[threadCount];
 
 		for (int i = 0; i < runnable.length; i++) {
