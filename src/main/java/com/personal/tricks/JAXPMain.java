@@ -15,28 +15,28 @@ class XMLTagsEvent extends DefaultHandler {
 
 	@Override
 	public void startDocument() throws SAXException {
-		// TODO Auto-generated method stub
 		super.startDocument();
+		System.out.println("Found start of document.");
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		// TODO Auto-generated method stub
 		super.endDocument();
+		System.out.println("Found end of document.");
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		// TODO Auto-generated method stub
 		super.startElement(uri, localName, qName, attributes);
+		System.out.println(String.format("Start of element-> uri: %s, localName: %s, qName: %s", uri, localName, qName));
 	}
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		// TODO Auto-generated method stub
 		super.endElement(uri, localName, qName);
+		System.out.println(String.format("End of element-> uri: %s, localName: %s, qName: %s", uri, localName, qName));
 	}
 
 }
@@ -51,7 +51,7 @@ public class JAXPMain {
 			SAXParser saxParser = saxParserFactory.newSAXParser();
 
 			File file = new File(
-					"/home/piyush/SeamlessWorkspace/se-vt/se-vt-reports/src/main/reports/Finance/VT_BIR_1001.rptdesign");
+					"src/main/resources/Bookstore.xml");
 
 			saxParser.parse(file, new XMLTagsEvent());
 
