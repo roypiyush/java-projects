@@ -2,8 +2,10 @@ package com.personal.jdbc;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 import javax.sql.DataSource;
 
@@ -19,7 +21,7 @@ public class JdbcMain {
         try {
             mysqlDS = new MysqlDataSource();
             mysqlDS.setServerName("localhost");
-            mysqlDS.setDatabaseName("mysql");
+            mysqlDS.setDatabaseName("EMPLOYEE");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,7 +34,7 @@ public class JdbcMain {
         try {
             mysqlDS = new MysqlConnectionPoolDataSource();
             mysqlDS.setServerName("localhost");
-            mysqlDS.setDatabaseName("mysql");
+            mysqlDS.setDatabaseName("EMPLOYEE");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,7 +47,7 @@ public class JdbcMain {
         try {
             mysqlDS = new MysqlXADataSource();
             mysqlDS.setServerName("localhost");
-            mysqlDS.setDatabaseName("mysql");
+            mysqlDS.setDatabaseName("EMPLOYEE");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,9 +64,27 @@ public class JdbcMain {
         try {
             con = dataSource.getConnection("root", "root");
             stmt = con.createStatement();
-            rs = stmt.executeQuery("select host, user from user;");
+            rs = stmt.executeQuery("select * from Employment;");
             while(rs.next()){
-                System.out.println("Host="+rs.getString("host")+", User="+rs.getString("user"));
+            	ResultSetMetaData metaData = rs.getMetaData();
+            	int columnCount = metaData.getColumnCount();
+            	
+            	String output = "";
+            	for (int i = 1; i <= columnCount; i++) {
+					String columnName = metaData.getColumnName(i);
+					int columnType = metaData.getColumnType(i);
+					
+					switch(columnType) {
+					case Types.INTEGER:
+						output += columnName + ": " + rs.getInt(i) + "  ";
+						break;
+					case Types.VARCHAR:
+						output += columnName + ": " + rs.getString(i) + "  ";
+						break;
+					};
+				}
+            	System.out.println(output);
+            	
             }
         } catch (SQLException e) {
             e.printStackTrace();
