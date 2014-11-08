@@ -61,6 +61,7 @@ public class VolatileMain {
 		thread5.join();
 		thread6.join();
 		thread7.join();
+		System.out.println("Reached End of Program");
 	}
 
 }
