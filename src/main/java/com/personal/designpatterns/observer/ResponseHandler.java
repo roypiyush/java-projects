@@ -1,4 +1,4 @@
-package com.personal.designpatterns;
+package com.personal.designpatterns.observer;
 
 import java.util.Observable;
 import java.util.Observer;  /* this is Event Handler */

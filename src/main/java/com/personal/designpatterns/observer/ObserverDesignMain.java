@@ -1,4 +1,4 @@
-package com.personal.designpatterns;
+package com.personal.designpatterns.observer;
 
 public class ObserverDesignMain {
 
