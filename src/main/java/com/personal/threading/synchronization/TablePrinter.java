@@ -1,9 +1,14 @@
 package com.personal.threading.synchronization;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class TablePrinter {
 
 	private int tableOf;
 
+	Lock lock = new ReentrantLock(false);
+	
 	public int getTableOf() {
 		return tableOf;
 	}

@@ -11,7 +11,7 @@ public class MainThreadClass {
 	public static void main(String[] args) {
 		TablePrinter printer = new TablePrinter();
 
-		int threads = Runtime.getRuntime().availableProcessors();
+		int threads = Runtime.getRuntime().availableProcessors() * 10;
 
 		ExecutorService executor = Executors.newFixedThreadPool(threads);
 
