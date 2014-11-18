@@ -1,4 +1,4 @@
-package com.personal.threading.synchronization;
+package com.personal.concurrency.synchronization;
 
 public class TablePrintRunnerThread implements Runnable {
 	private TablePrinter printer;

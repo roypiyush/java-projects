@@ -1,4 +1,4 @@
-package com.personal.threading;
+package com.personal.concurrency.threading;
 
 public class SimpleThreads {
 

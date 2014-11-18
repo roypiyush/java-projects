@@ -1,4 +1,4 @@
-package com.personal.threading;
+package com.personal.concurrency.threading;
 
 import java.util.Calendar;
 

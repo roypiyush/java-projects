@@ -1,4 +1,4 @@
-package com.personal.threading.synchronization;
+package com.personal.concurrency.synchronization;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

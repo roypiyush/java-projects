@@ -1,4 +1,4 @@
-package com.personal.threading.ipc;
+package com.personal.concurrency.producer_consumer;
 
 public class Producer implements Runnable {
 
