@@ -15,6 +15,10 @@ import com.personal.rmi.server.interfaces.Task;
  * Start rmiregistry first 
  * $ rmiregistry
  *  
+ *  Along with above you should also run rmid (rmi daemon)
+ *  
+ *  Your working directory will be target/classes
+ *  
  * $ java -Djava.rmi.server.hostname=127.0.0.1 -Djava.security.policy=server.policy com.personal.rmi.server.ComputeEngine
  * 
  */
