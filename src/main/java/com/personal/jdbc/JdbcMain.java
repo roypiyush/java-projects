@@ -15,46 +15,46 @@ import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
 
 public class JdbcMain {
 
-	public static DataSource getMySQLDataSource() {
+	public static DataSource getMySQLDataSource(String host, String databaseName) {
         
         MysqlDataSource mysqlDS = null;
         try {
             mysqlDS = new MysqlDataSource();
-            mysqlDS.setServerName("localhost");
-            mysqlDS.setDatabaseName("EMPLOYEE");
+            mysqlDS.setServerName(host);
+            mysqlDS.setDatabaseName(databaseName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return mysqlDS;
     }
 	
-	public static DataSource getMySQLPooledDataSource() {
+	public static DataSource getMySQLPooledDataSource(String host, String databaseName) {
         
         MysqlDataSource mysqlDS = null;
         try {
             mysqlDS = new MysqlConnectionPoolDataSource();
-            mysqlDS.setServerName("localhost");
-            mysqlDS.setDatabaseName("EMPLOYEE");
+            mysqlDS.setServerName(host);
+            mysqlDS.setDatabaseName(databaseName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return mysqlDS;
     }
 	
-	public static DataSource getMySQLXADataSource() {
+	public static DataSource getMySQLXADataSource(String host, String databaseName) {
         
         MysqlDataSource mysqlDS = null;
         try {
             mysqlDS = new MysqlXADataSource();
-            mysqlDS.setServerName("localhost");
-            mysqlDS.setDatabaseName("EMPLOYEE");
+            mysqlDS.setServerName(host);
+            mysqlDS.setDatabaseName(databaseName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return mysqlDS;
     }
 	
-	static void simpleQuery(DataSource dataSource) {
+	static void simpleQuery(DataSource dataSource, String username, String password, String dmlQuery) {
 		
 		System.out.println("******** Querying using " + dataSource.getClass().getCanonicalName() + " ********");
 		
@@ -62,9 +62,9 @@ public class JdbcMain {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            con = dataSource.getConnection("root", "root");
+            con = dataSource.getConnection(username, password);
             stmt = con.createStatement();
-            rs = stmt.executeQuery("select * from Employment;");
+            rs = stmt.executeQuery(dmlQuery);
             while(rs.next()){
             	ResultSetMetaData metaData = rs.getMetaData();
             	int columnCount = metaData.getColumnCount();
@@ -103,14 +103,21 @@ public class JdbcMain {
 
 		DataSource dataSource = null;
 		
-		dataSource = getMySQLDataSource();
-		simpleQuery(dataSource);
+		String host = "localhost";
+		String databaseName = "EMPLOYEE";
+		String username = "root";
+		String password = "root";
+		String dmlQuery1 = "select * from Employment";
+		String dmlQuery2 = "select * from Name";
 		
-		dataSource = getMySQLPooledDataSource();
-		simpleQuery(dataSource);
+		dataSource = getMySQLDataSource(host, databaseName);
+		simpleQuery(dataSource, username, password, "show tables");
 		
-		dataSource = getMySQLXADataSource();
-		simpleQuery(dataSource);
+		dataSource = getMySQLPooledDataSource(host, databaseName);
+		simpleQuery(dataSource, username, password, dmlQuery1);
+		
+		dataSource = getMySQLXADataSource(host, databaseName);
+		simpleQuery(dataSource, username, password, dmlQuery2);
 
 	}
 
