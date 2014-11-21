@@ -6,13 +6,34 @@
 	<version>1.0.0.1-SNAPSHOT</version>
 	<name>Java Projects</name>
 	<description>This is a composite of java applications</description>
+	<properties>
+      	<jettyVersion>9.0.2.v20130417</jettyVersion>
+		<slfjVersion>1.6.4</slfjVersion>
+	</properties>
 
 	<dependencies>
 		<!-- <dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4</artifactId>
 			<version>4.2.2</version>
+		</dependency> 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
+			<version>${slfjVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-nop</artifactId>
+			<scope>test</scope>
+			<version>${slfjVersion}</version>
 		</dependency> -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jettyVersion}</version>
+	    </dependency>
 		<dependency>
 		   <groupId>javax</groupId>
 		   <artifactId>javaee-api</artifactId>
