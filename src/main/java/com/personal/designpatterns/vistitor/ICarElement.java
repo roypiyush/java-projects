@@ -12,5 +12,10 @@ package com.personal.designpatterns.vistitor;
  *
  */
 public interface ICarElement {
+	/**
+	 * Will accept Visitor that is passed.
+	 * 
+	 * @param visitor
+	 */
 	void accept(Visitor visitor);
 }
