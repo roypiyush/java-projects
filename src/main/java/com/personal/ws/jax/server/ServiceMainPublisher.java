@@ -41,7 +41,7 @@ public class ServiceMainPublisher {
 			endpoint2.publish(context2);
 
 			httpServer.start();
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
