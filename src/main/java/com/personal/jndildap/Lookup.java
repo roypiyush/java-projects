@@ -4,10 +4,11 @@ import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
-import javax.naming.ldap.LdapContext;
+import javax.naming.directory.DirContext;
 
 public class Lookup {
 
@@ -17,20 +18,27 @@ public class Lookup {
 		Hashtable<String, Object> env = new Hashtable<String, Object>(11);
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
 				"com.sun.jndi.ldap.LdapCtxFactory");
-		env.put(Context.PROVIDER_URL, "ldap://localhost:389/dc=nodomain");
+		env.put(Context.PROVIDER_URL, "ldap://localhost:389/dc=example,dc=com");
 
 		Context ctx = null;
 		try {
 			// Create the initial context
-			 ctx = new InitialContext(env);
+			ctx = new InitialContext(env);
 
-			// Perform lookup and cast to target type
-			LdapContext b = (LdapContext) ctx
-					.lookup("ou=People");
+			NamingEnumeration<NameClassPair> list = ctx.list("ou=People");
+			while (list.hasMoreElements()) {
+				NameClassPair nameClassPair = list.next();
+				System.out.println(String.format(
+						"Name: %s, ClassName: %s, NameInNamespace:%s",
+						nameClassPair.getName(), nameClassPair.getClassName(),
+						nameClassPair.getNameInNamespace()));
+			}
 
-			Attributes attributes = b.getAttributes("uid=john");
+			DirContext dirContext = (DirContext) ctx.lookup("ou=People");
+			Attributes attributes = dirContext.getAttributes("uid=john");
+
 			NamingEnumeration<String> enumerations = attributes.getIDs();
-			while(enumerations.hasMoreElements()) {
+			while (enumerations.hasMoreElements()) {
 				String id = enumerations.next();
 				System.out.println(attributes.get(id));
 			}
@@ -38,8 +46,12 @@ public class Lookup {
 		} catch (NamingException e) {
 			System.out.println("Lookup failed: " + e);
 		} finally {
-			if(ctx != null)
-				try { ctx.close(); } catch (NamingException e) { e.printStackTrace(); }
+			if (ctx != null)
+				try {
+					ctx.close();
+				} catch (NamingException e) {
+					e.printStackTrace();
+				}
 		}
 
 	}
