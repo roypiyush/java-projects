@@ -1,5 +1,6 @@
 package com.personal.jdbc;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
@@ -130,8 +131,7 @@ public class JdbcMain {
 		String username = "root";
 		String password = "root";
 		String dmlQuery1 = "select * from Employment";
-		String dmlQuery2 = "select * from Name";
-		String dmlQuery3 = "select * from Company";
+		String dmlQuery2 = "select * from Company";
 		
 		dataSource = getMySQLDataSource(host, databaseName);
 		simpleQuery(dataSource, username, password, "show tables");
@@ -143,14 +143,22 @@ public class JdbcMain {
 		simpleQuery(dataSource, username, password, dmlQuery2);
 
 		
-		System.out.println("******** Querying using " + " direct connection by registering driver" + " ********");
+		System.out.println("******** Stored Procedure Call using " + " direct connection by registering driver" + " ********");
+		/* Run below line by line
+		DELIMITER //
+ 		CREATE PROCEDURE GetAllNames()
+		BEGIN
+		SELECT *  FROM Name;
+		END //
+		DELIMITER ;
+		 */
 		Connection connection = null;
-		Statement stmt = null;
+		CallableStatement stmt = null;
         ResultSet rs = null;
         try {
         	connection = getConnection("jdbc:mysql://localhost/EMPLOYEE", username, password);
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery(dmlQuery3);
+            stmt = connection.prepareCall("Call GetAllNames()");
+            rs = stmt.executeQuery();
             iterateResultSet(rs);
             
             DatabaseMetaData metaData = connection.getMetaData();
