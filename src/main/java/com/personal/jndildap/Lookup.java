@@ -4,7 +4,10 @@ import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
+import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapContext;
 
 public class Lookup {
@@ -26,7 +29,12 @@ public class Lookup {
 			LdapContext b = (LdapContext) ctx
 					.lookup("ou=People");
 
-			System.out.println(b.lookup("uid=john"));
+			Attributes attributes = b.getAttributes("uid=john");
+			NamingEnumeration<String> enumerations = attributes.getIDs();
+			while(enumerations.hasMoreElements()) {
+				String id = enumerations.next();
+				System.out.println(attributes.get(id));
+			}
 
 		} catch (NamingException e) {
 			System.out.println("Lookup failed: " + e);
