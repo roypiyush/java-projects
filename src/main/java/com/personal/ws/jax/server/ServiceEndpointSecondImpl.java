@@ -2,12 +2,14 @@ package com.personal.ws.jax.server;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
 @WebService
+@HandlerChain(file="../handler/Handlers.xml")
 public class ServiceEndpointSecondImpl implements ServiceEndpointInterface {
 
 	@Resource private WebServiceContext mWSContext;
