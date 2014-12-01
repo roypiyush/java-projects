@@ -34,7 +34,7 @@ public class MySoapHandler implements SOAPHandler<SOAPMessageContext> {
 					sr);
 			String string = sr.getWriter().toString();
 			System.out.println(string);
-			if(string.contains("my.server.jax.ws.personal.com")) {
+			if (string.contains("my.server.jax.ws.personal.com")) {
 				return false;
 			}
 		} catch (TransformerFactoryConfigurationError | TransformerException e) {

@@ -2,33 +2,21 @@ package com.personal.ws.jax.server;
 
 import java.util.concurrent.Callable;
 
-public class DataProcessor implements
-// Runnable,
-		Callable<String> {
+public class DataProcessor implements Callable<String> {
 
 	private String result = null;
 
 	private String param;
 
-	// private Thread thread;
-
 	public DataProcessor(String param) {
 		this.param = param;
-		// thread = new Thread(this);
-		// thread.start();
 	}
 
 	public void run() {
 		perform();
 	}
 
-	@SuppressWarnings("static-access")
 	private void perform() {
-		try {
-			Thread.currentThread().sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		result = "Hello World JAX-WS " + param;
 	}
 
@@ -38,8 +26,6 @@ public class DataProcessor implements
 	}
 
 	public String getResult() {
-		// while(thread.isAlive()) ;
-
 		return result;
 	}
 

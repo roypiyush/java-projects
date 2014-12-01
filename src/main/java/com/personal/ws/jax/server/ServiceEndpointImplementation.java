@@ -8,12 +8,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.jws.WebService;
 
-//Service Implementation
-@WebService(name = "ServiceEndpointImpl")
+@WebService
 public class ServiceEndpointImplementation implements ServiceEndpointInterface {
 
-	// private static ExecutorService executorService = Executors
-	// .newFixedThreadPool(50);
 	private static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(50,
 			50, 50, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(10000),
 			new ThreadPoolExecutor.CallerRunsPolicy());
@@ -33,9 +30,6 @@ public class ServiceEndpointImplementation implements ServiceEndpointInterface {
 		}
 
 		return result;
-
-		// return dataProcessor.getResult();
-
 	}
 
 }

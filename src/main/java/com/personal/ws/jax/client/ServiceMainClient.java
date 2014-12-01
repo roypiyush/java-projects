@@ -1,13 +1,9 @@
 package com.personal.ws.jax.client;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.RemoteException;
 
-import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;
-
-
 
 //import com.personal.ws.jax.server.ServiceEndpointImpl;
 
@@ -25,20 +21,12 @@ public class ServiceMainClient {
 
 		long startTime = System.currentTimeMillis();
 
-		String wsdlDocumentLocation = "http://localhost:8910/hello?wsdl";
-
-		QName serviceName = new QName("http://server.jax.ws.personal.com/",
-				"ServiceEndpointImplementationService");
-		QName portName = new QName("http://server.jax.ws.personal.com/",
-				"ServiceEndpointImplPort");
-
-		int threadCount = 1;
+		int threadCount = 20;
 		WebServiceRunnable[] runnable = new WebServiceRunnable[threadCount];
 
 		for (int i = 0; i < runnable.length; i++) {
 			String param = "param_" + i;
-			runnable[i] = createRunnableInstance(param, wsdlDocumentLocation,
-					serviceName, portName);
+			runnable[i] = new WebServiceRunnable(param);
 		}
 
 		Thread[] threadArray = new Thread[threadCount];
@@ -58,35 +46,8 @@ public class ServiceMainClient {
 
 		long timeDiff = endTime - startTime;
 
-		System.out.println(String.format("%d  %s", timeDiff,
-				new Float(timeDiff) / 1000));
+		System.out.println(String.format("Time difference %dms", timeDiff));
 
 	}
 
-	private static WebServiceRunnable createRunnableInstance(
-			String webserviceParam, String wsdlDocumentLocation,
-			QName serviceName, QName portName) {
-
-		WebServiceRunnable runnable1 = new WebServiceRunnable(
-				wsdlDocumentLocation, serviceName, portName, webserviceParam);
-		return runnable1;
-	}
-
-	static void test() throws MalformedURLException {
-		URL wsdlDocumentLocation = new URL("http://localhost:8910/hello?wsdl");
-		QName serviceName = new QName("http://server.jax.ws.personal.com/",
-				"ServiceEndpointImplementationService");
-
-		@SuppressWarnings("unused")
-		javax.xml.ws.Service service = javax.xml.ws.Service.create(
-				wsdlDocumentLocation, serviceName);
-
-		@SuppressWarnings("unused")
-		QName portName = new QName("http://server.jax.ws.personal.com/",
-				"ServiceEndpointImplPort");
-
-//		ServiceEndpointImpl endpointImpl = (ServiceEndpointImpl) service
-//				.getPort(portName, ServiceEndpointImpl.class);
-//		System.out.println(endpointImpl.getHelloWorldAsString("Piyush"));
-	}
 }
