@@ -7,37 +7,30 @@
 	<name>Java Projects</name>
 	<description>This is a composite of java applications</description>
 	<properties>
-      	<jettyVersion>9.0.2.v20130417</jettyVersion>
-		<slfjVersion>1.6.4</slfjVersion>
+		<jettyVersion>9.0.2.v20130417</jettyVersion>
+		<slf4jVersion>1.7.7</slf4jVersion>
 	</properties>
 
 	<dependencies>
-		<!-- <dependency>
-			<groupId>org.antlr</groupId>
-			<artifactId>antlr4</artifactId>
-			<version>4.2.2</version>
-		</dependency> 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
-			<version>${slfjVersion}</version>
+			<version>${slf4jVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-nop</artifactId>
-			<scope>test</scope>
-			<version>${slfjVersion}</version>
-		</dependency> -->
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4jVersion}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 			<version>${jettyVersion}</version>
-	    </dependency>
+		</dependency>
 		<dependency>
-		   <groupId>javax</groupId>
-		   <artifactId>javaee-api</artifactId>
-		   <version>7.0</version>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml</groupId>
@@ -94,22 +87,22 @@
 				<version>3.1</version>
 				<configuration>
 					<fork>true</fork>
-        			<source>1.8</source>
-		       		<target>1.8</target>
-		        </configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 		</plugins>
 		<pluginManagement>
-   <plugins>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>          
-        <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-        </configuration>
-    </plugin>
-   </plugins>
-  </pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

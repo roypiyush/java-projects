@@ -26,18 +26,23 @@ import javax.xml.transform.stream.StreamResult;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class MainRunner extends AbstractHandler {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainRunner.class);
 	
 	public void handle(String target,
             Request baseRequest,
             HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException {
-		
 		String publishUrlPattern = "/test";
+		if(!target.equals(publishUrlPattern))
+			return;
+		
 		baseRequest.setContextPath(publishUrlPattern);
 		
 		int contentLength = baseRequest.getContentLength();
@@ -100,10 +105,13 @@ public class MainRunner extends AbstractHandler {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		
 		Server server = new Server(8080);
         server.setHandler(new MainRunner());
   
         server.start();
+        
+        LOGGER.info("Server started !");
         server.join();
 	}
 
