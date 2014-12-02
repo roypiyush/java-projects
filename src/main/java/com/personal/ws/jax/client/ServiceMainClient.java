@@ -5,8 +5,6 @@ import java.rmi.RemoteException;
 
 import javax.xml.rpc.ServiceException;
 
-//import com.personal.ws.jax.server.ServiceEndpointImpl;
-
 public class ServiceMainClient {
 
 	/**
@@ -26,7 +24,15 @@ public class ServiceMainClient {
 
 		for (int i = 0; i < runnable.length; i++) {
 			String param = "param_" + i;
-			runnable[i] = new WebServiceRunnable(param);
+			runnable[i] = new WebServiceRunnable();
+			runnable[i].setEndpoint("http://localhost:8910/hello");
+			runnable[i].setNamespaceUri("http://server.jax.ws.personal.com/");
+			runnable[i].setServicePort("ServiceEndpointImplPort");
+			runnable[i].setService("ServiceEndpointImplementationService");
+			runnable[i].setOperationName("getHelloWorldAsString");
+			runnable[i].setPrefix("ns");
+			runnable[i].setParameterName("arg0");
+			runnable[i].setWebserviceParam(param);
 		}
 
 		Thread[] threadArray = new Thread[threadCount];
