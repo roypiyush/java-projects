@@ -42,7 +42,6 @@ public class TestMain {
 	/**
 	 * @param args
 	 */
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 
 		Runtime runtime = Runtime.getRuntime();
@@ -55,8 +54,6 @@ public class TestMain {
 		
 		TestMain main = new TestMain();
 
-		
-		
 		String s1 = "Piyush";
 		String s2 = new String("Piyush");
 
@@ -72,12 +69,37 @@ public class TestMain {
 			e.printStackTrace();
 		}
 		
+		myLabelDemo();
+		
+		timeDifferenceDemo();
+	}
+
+	@SuppressWarnings("unused")
+	private static void myLabelDemo() {
 		MyLabel : {
 			int value = -11;
 			System.out.println(Integer.toBinaryString(value));
 			System.out.println(Integer.toBinaryString(value << 2));
 			System.out.println(Integer.toBinaryString(value >> 2));
 			System.out.println(Integer.toBinaryString(value >>> 2));
+		}
+	}
+	
+	
+	public static void timeDifferenceDemo() {
+		
+		try {
+			
+			long diffTime = 10;
+			
+			long startTime = System.currentTimeMillis();
+			Thread.sleep(diffTime);
+			long endTime = System.currentTimeMillis();
+			
+			System.out.println(String.format("Delayed time by %d", endTime - startTime));
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		
 		
