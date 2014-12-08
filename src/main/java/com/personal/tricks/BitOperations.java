@@ -23,6 +23,10 @@ public class BitOperations {
 		System.out.println((2147483647 << 20) + " : "
 				+ Integer.toBinaryString(2147483647 << 20));
 
+		int digit = 5;
+		System.out.println(Integer.toBinaryString(digit));
+		System.out.println(Integer.toBinaryString(-digit));
+		System.out.println(Integer.toBinaryString(digit & -digit));
 	}
 
 }
