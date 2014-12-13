@@ -6,7 +6,8 @@ import java.util.concurrent.CyclicBarrier;
 
 public class BarrierObject {
 
-	CyclicBarrier barrier = new CyclicBarrier(4);
+	private CyclicBarrier barrier = new CyclicBarrier(4);
+
 	Random random = new Random();
 	
 	public void perform(String threadName) throws InterruptedException, BrokenBarrierException {
@@ -18,5 +19,9 @@ public class BarrierObject {
 		System.out.println(threadName + " I just woke up. Let me resume my duty.");
 		barrier.await();
 		System.out.println(threadName + " Exiting!\n");
+	}
+	
+	public CyclicBarrier getBarrier() {
+		return barrier;
 	}
 }

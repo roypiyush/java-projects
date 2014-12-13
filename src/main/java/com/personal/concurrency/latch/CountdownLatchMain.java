@@ -9,10 +9,12 @@ class Worker implements Runnable {
 
 	private final CountDownLatch startSignal;
 	private final CountDownLatch doneSignal;
-
-	Worker(CountDownLatch startSignal, CountDownLatch doneSignal) {
+	private final long initialStartTime;
+	
+	Worker(CountDownLatch startSignal, CountDownLatch doneSignal, long initialStartTime) {
 		this.startSignal = startSignal;
 		this.doneSignal = doneSignal;
+		this.initialStartTime = initialStartTime;
 	}
 
 	public void run() {
@@ -25,38 +27,39 @@ class Worker implements Runnable {
 	}
 
 	private void doWork() {
-		System.out.println("Doing my work.");
+		System.out.printf("%s Doing my work at %d \n", Thread.currentThread().getName(), System.currentTimeMillis() - initialStartTime);
 
 	}
 }
 
 public class CountdownLatchMain {
 
-	void mainRunner() throws InterruptedException {
+	void mainRunner(long initialStartTime) throws InterruptedException {
 		
 		int N = 7;
 		
-		CountDownLatch startSignal = new CountDownLatch(1);
+		CountDownLatch startSignal = new CountDownLatch(0);
 		CountDownLatch doneSignal = new CountDownLatch(N);
 
 		for (int i = 0; i < N; ++i)
 			// create and start threads
-			new Thread(new Worker(startSignal, doneSignal)).start();
+			new Thread(new Worker(startSignal, doneSignal, initialStartTime)).start();
 
-		doSomethingElse();
+		doSomethingElse(initialStartTime);
 		startSignal.countDown();
-		doSomethingElse();
+		doSomethingElse(initialStartTime);
 		doneSignal.await();
+		doSomethingElse(initialStartTime);
 	}
 
-	private void doSomethingElse() {
-		System.out.println("Doing something else.");
+	private void doSomethingElse(long initialStartTime) {
+		System.out.printf("%s -> Doing something else at %d \n", Thread.currentThread().getName(), System.currentTimeMillis() - initialStartTime);
 
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		
-		new CountdownLatchMain().mainRunner();
+		System.out.printf("Hey, I'm %s\n" , Thread.currentThread().getName());
+		new CountdownLatchMain().mainRunner(System.currentTimeMillis());
 
 	}
 
