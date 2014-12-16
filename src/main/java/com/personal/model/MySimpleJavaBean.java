@@ -1,10 +1,13 @@
 package com.personal.model;
 
-public class MySimpleJavaBean {
+public class MySimpleJavaBean implements Cloneable {
 	
 	private String name;
 	private String value;
 	
+	public MySimpleJavaBean() {
+		super();
+	}
 	
 	public String getName() {
 		return name;
@@ -27,11 +30,11 @@ public class MySimpleJavaBean {
 		return super.equals(obj);
 	}
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
 	@Override
 	public String toString() {
-		return super.toString();
+		return name + " " + value + " " + hashCode();
 	}
 }
