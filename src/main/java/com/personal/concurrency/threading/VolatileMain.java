@@ -8,19 +8,17 @@ class VolatileDemo {
 
 class VolatileRunnable implements Runnable {
 	private VolatileDemo volatileDemo;
-	private long future;
-
 	
-	public VolatileRunnable(VolatileDemo volatileDemo, long future) {
+	public VolatileRunnable(VolatileDemo volatileDemo) {
 		super();
 		this.volatileDemo = volatileDemo;
-		this.future = future;
 	}
 
 
 	@Override
 	public void run() {
-		while(Calendar.getInstance().getTimeInMillis() < future) {
+		
+		for(int i = 0; i < 10; i++) {
 			System.out.println(Thread.currentThread().getName() + " Put: " + (++volatileDemo.value));
 		}
 	}
@@ -36,31 +34,23 @@ public class VolatileMain {
 		calendar.set(Calendar.SECOND, sec + 1);
 		calendar.getTimeInMillis();
 		
-		VolatileRunnable runnable = new VolatileRunnable(new VolatileDemo(), calendar.getTimeInMillis());
+		VolatileDemo volatileVariable = new VolatileDemo();
+		VolatileRunnable runnable = new VolatileRunnable(volatileVariable);
 		
-		Thread thread1 = new Thread(runnable, "Thread 1");
-		Thread thread2 = new Thread(runnable, "Thread 2");
-		Thread thread3 = new Thread(runnable, "Thread 3");
-		Thread thread4 = new Thread(runnable, "Thread 4");
-		Thread thread5 = new Thread(runnable, "Thread 5");
-		Thread thread6 = new Thread(runnable, "Thread 6");
-		Thread thread7 = new Thread(runnable, "Thread 7");
+		int nThreads = Runtime.getRuntime().availableProcessors();
+		int factor = 1000;
 		
-		thread1.start();
-		thread2.start();
-		thread3.start();
-		thread4.start();
-		thread5.start();
-		thread6.start();
-		thread7.start();
+		Thread thread[] = new Thread[nThreads * factor];
+		for (int i = 0; i < nThreads * factor; i++) {
+			thread[i] = new Thread(runnable, "Thread " + (i + 1));
+			thread[i].start();
+		}
 		
-		thread1.join();
-		thread2.join();
-		thread3.join();
-		thread4.join();
-		thread5.join();
-		thread6.join();
-		thread7.join();
+		for (int i = 0; i < nThreads * factor; i++) {
+			thread[i].join();
+		}
+		
+		System.out.printf("Expected : %d, Actual : %d \n", nThreads * factor * 10, volatileVariable.value);
 		System.out.println("Reached End of Program");
 	}
 
