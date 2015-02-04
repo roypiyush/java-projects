@@ -12,7 +12,7 @@ public class MyRunnable implements Runnable {
 	public void run() {
 		try {
 
-			sharedObject.semaphore.acquire();
+			sharedObject.semaphore.tryAcquire();
 			sharedObject.perform(Thread.currentThread().getName());
 			System.out.println(Thread.currentThread().getName()
 					+ " I wanna go to sleep\n");

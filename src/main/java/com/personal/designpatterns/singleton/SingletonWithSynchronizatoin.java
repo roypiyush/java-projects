@@ -28,7 +28,6 @@ public class SingletonWithSynchronizatoin {
 				
 			}
 		});
-		t1.start();
 		
 		Thread t2 = new Thread(new Runnable() {
 			
@@ -38,6 +37,7 @@ public class SingletonWithSynchronizatoin {
 				
 			}
 		});
+		t1.start();
 		t2.start();
 
 	}

@@ -1,16 +1,18 @@
 package com.personal.concurrency.producer_consumer;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class ModelData {
 	
 	private int data = 0;
 	
 	// Used as a purpose of GUARDED BLOCKS
-	public static boolean isProduced = false;
+	public static AtomicBoolean isProduced = new AtomicBoolean(false);
 	
 	public synchronized void produce()
 	{
 		
-		if (isProduced) {
+		if (isProduced.get()) {
 			try {
 				wait();
 			} catch (InterruptedException e) { 
@@ -21,14 +23,14 @@ public class ModelData {
 		data = (int)(Math.random() * 100);
 		System.out.println("Produced : " + data);
 		
-		isProduced = true;
+		isProduced.set(true);
 		notifyAll();
 		
 	}
 	
 	public synchronized void consume(){
 		
-		if (!isProduced) {
+		if (!isProduced.get()) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -38,7 +40,7 @@ public class ModelData {
 //		data = 0;
 		System.out.println("Consumed : " + data);
 		
-		isProduced = false;
+		isProduced.set(false);
 		notifyAll();
 		
 		
