@@ -46,9 +46,9 @@ public class ThreadLocalMain {
 				}
 			});
 			thread.start();
-			System.out.printf("%s => classlocader: %s \n", thread.getName(), thread.getContextClassLoader());
+			System.out.printf("%s => classlocader: %s, ThreadLocal While running outside: %s\n", thread.getName(), thread.getContextClassLoader(), ThreadId.get());
 			thread.join();
-			System.out.printf("%s => ThreadLocal outside: %s \n", thread.getName(), ThreadId.get());
+			System.out.printf("%s =>  \n", thread.getName(), ThreadId.get());
 		}
 	
 		for(int i = 0; i < 5; i++) {

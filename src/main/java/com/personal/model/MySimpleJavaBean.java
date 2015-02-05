@@ -1,10 +1,15 @@
 package com.personal.model;
 
+
 public class MySimpleJavaBean implements Cloneable {
+	
 	
 	private String name;
 	private String value;
 	
+	 /*
+	 * Default no-arg constructor required for Serialization
+	 */
 	public MySimpleJavaBean() {
 		super();
 	}
