@@ -41,12 +41,14 @@ public class ThreadLocalMain {
 				
 				@Override
 				public void run() {
-					System.out.println(ThreadId.get());
+					System.out.printf("ThreadLocal inside running thread: %s \n", ThreadId.get());
 					
 				}
 			});
 			thread.start();
+			System.out.printf("%s => classlocader: %s \n", thread.getName(), thread.getContextClassLoader());
 			thread.join();
+			System.out.printf("%s => ThreadLocal outside: %s \n", thread.getName(), ThreadId.get());
 		}
 	
 		for(int i = 0; i < 5; i++) {
