@@ -22,7 +22,8 @@ public class WeakReferenceDemo {
         Map<Integer, String> map = new HashMap<Integer, String>();
         myMap = new WeakReference<Map<Integer, String>>(map);
 
-        map = null;
+        map = null; // making weakly referenced
+        
         int i = 0;
         while (true) {
         	// Use get() method to refer to actual object

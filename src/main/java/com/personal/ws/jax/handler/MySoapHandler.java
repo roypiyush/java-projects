@@ -37,7 +37,10 @@ public class MySoapHandler implements SOAPHandler<SOAPMessageContext> {
 			if (string.contains("my.server.jax.ws.personal.com")) {
 				return false;
 			}
-		} catch (TransformerFactoryConfigurationError | TransformerException e) {
+		} catch (TransformerFactoryConfigurationError e){
+			e.printStackTrace();
+		}
+		catch (TransformerException e) {
 			e.printStackTrace();
 		}
 

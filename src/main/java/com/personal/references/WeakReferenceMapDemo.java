@@ -12,7 +12,7 @@ public class WeakReferenceMapDemo {
 		hashMap = new WeakHashMap<String, MySimpleJavaBean>(10000);
 		
 		int i = 0;
-        while (true) {
+        while (true) { 
         	++i;
             hashMap.put("String" + Integer.toString(i), new MySimpleJavaBean());
             System.out.println("im still working!!!!" + hashMap.size());
