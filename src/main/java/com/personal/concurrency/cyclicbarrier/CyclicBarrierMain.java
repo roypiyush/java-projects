@@ -4,9 +4,11 @@ public class CyclicBarrierMain {
 
 	public static void main(String[] args) {
 
-		int nThreads = Runtime.getRuntime().availableProcessors();
+		int coreProcessorsCount = Runtime.getRuntime().availableProcessors();
+		int barrierCount = coreProcessorsCount;
+		int nThreads = coreProcessorsCount * 2;
 
-		BarrierObject barrierObject = new BarrierObject();
+		BarrierObject barrierObject = new BarrierObject(barrierCount);
 
 		for (int i = 0; i < nThreads; i++) {
 			new Thread(new BarrierRunnable(barrierObject)).start();

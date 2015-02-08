@@ -1,7 +1,6 @@
 package com.personal.concurrency.executorframework;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -19,7 +18,7 @@ public class SimpleExecutorDemo {
 		DataProcessor dataProcessor = new DataProcessor("My Sample Data");
 		FutureTask<String> task = new FutureTask<String>(dataProcessor);
 		// You can cast to executor
-		((Executor)executorService).execute(task);
+		executorService.execute(task);
 		String result;
 		try {
 			result = task.get();
@@ -29,7 +28,7 @@ public class SimpleExecutorDemo {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-//		executorService.shutdown();
+		executorService.shutdown();
 
 	}
 

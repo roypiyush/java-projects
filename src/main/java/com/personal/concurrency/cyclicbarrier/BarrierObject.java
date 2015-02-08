@@ -6,10 +6,14 @@ import java.util.concurrent.CyclicBarrier;
 
 public class BarrierObject {
 
-	private CyclicBarrier barrier = new CyclicBarrier(4);
+	private CyclicBarrier barrier;
 
 	Random random = new Random();
 	
+	public BarrierObject(int barrierCount) {
+		barrier = new CyclicBarrier(barrierCount);
+	}
+
 	public void perform(String threadName) throws InterruptedException, BrokenBarrierException {
 		int time = random.nextInt(8) + 8;
 		
