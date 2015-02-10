@@ -47,3 +47,10 @@ INSERT INTO `Employment`(`EmployeeId`, `NameKey`, `CompanyKey`) VALUES
 ('CP1', 1, 1),
 ('CP2', 2, 1),
 ('CP1', 3, 2);
+
+DELIMITER //
+CREATE PROCEDURE GetAllNames()
+BEGIN
+SELECT *  FROM Name;
+END //
+DELIMITER ;

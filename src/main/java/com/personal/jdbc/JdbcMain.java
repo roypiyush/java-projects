@@ -144,14 +144,7 @@ public class JdbcMain {
 
 		
 		System.out.println("******** Stored Procedure Call using " + " direct connection by registering driver" + " ********");
-		/* Run below line by line
-		DELIMITER //
- 		CREATE PROCEDURE GetAllNames()
-		BEGIN
-		SELECT *  FROM Name;
-		END //
-		DELIMITER ;
-		 */
+		
 		Connection connection = null;
 		CallableStatement stmt = null;
         ResultSet rs = null;
