@@ -154,8 +154,55 @@ public class JdbcMain {
             rs = stmt.executeQuery();
             iterateResultSet(rs);
             
-            DatabaseMetaData metaData = connection.getMetaData();
-            System.out.println(String.format("\n%s %s", metaData.getDatabaseProductName(), metaData.getDatabaseProductVersion()));
+            DatabaseMetaData md = connection.getMetaData();
+            System.out.println(String.format("\n%s %s", md.getDatabaseProductName(), md.getDatabaseProductVersion()));
+			System.out.println("ResultSet.HOLD_CURSORS_OVER_COMMIT = "
+					+ ResultSet.HOLD_CURSORS_OVER_COMMIT);
+
+			System.out.println("ResultSet.CLOSE_CURSORS_AT_COMMIT = "
+					+ ResultSet.CLOSE_CURSORS_AT_COMMIT);
+
+			System.out.println("Default cursor holdability: "
+					+ md.getResultSetHoldability());
+
+			System.out
+					.println("Supports HOLD_CURSORS_OVER_COMMIT? "
+							+ md.supportsResultSetHoldability(ResultSet.HOLD_CURSORS_OVER_COMMIT));
+
+			System.out
+					.println("Supports CLOSE_CURSORS_AT_COMMIT? "
+							+ md.supportsResultSetHoldability(ResultSet.CLOSE_CURSORS_AT_COMMIT));
+			
+			System.out.println();
+			
+			System.out.println("ResultSet.TYPE_FORWARD_ONLY = "
+					+ ResultSet.TYPE_FORWARD_ONLY);
+			System.out.println("ResultSet.TYPE_SCROLL_SENSITIVE = "
+					+ ResultSet.TYPE_SCROLL_INSENSITIVE);
+			System.out.println("ResultSet.TYPE_SCROLL_INSENSITIVE = "
+					+ ResultSet.TYPE_SCROLL_INSENSITIVE);
+			
+			
+			System.out.println("Supports ResultSet.TYPE_FORWARD_ONLY? "
+					+ md.supportsResultSetType(ResultSet.TYPE_FORWARD_ONLY));
+			System.out.println("Supports ResultSet.TYPE_SCROLL_SENSITIVE? "
+					+ md.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE));
+			System.out.println("Supports ResultSet.TYPE_SCROLL_INSENSITIVE? "
+					+ md.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE));
+			
+			System.out.println();
+			
+			System.out.println("ResultSet.CONCUR_READ_ONLY = "
+					+ ResultSet.CONCUR_READ_ONLY);
+			System.out.println("ResultSet.CONCUR_UPDATABLE = "
+					+ ResultSet.CONCUR_UPDATABLE);
+			
+			System.out.println("Supports ResultSet.CONCUR_READ_ONLY? "
+					+ md.supportsResultSetType(ResultSet.CONCUR_READ_ONLY));
+			System.out.println("Supports ResultSet.CONCUR_UPDATABLE? "
+					+ md.supportsResultSetType(ResultSet.CONCUR_UPDATABLE));
+			
+			
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
