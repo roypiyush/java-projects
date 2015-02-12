@@ -1,5 +1,6 @@
 package com.personal.serialization;
 
+import java.io.IOException;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
@@ -19,27 +20,28 @@ public class SerializableSubclass extends NonSerializableSuperClass implements
 
 	public SerializableSubclass() {
 		super();
+		System.out.println("Getting object of SerializableSubclass");
 	}
 
 	/*
 	 * Use this method to override default serialization process. If
 	 * implemented, then this class is responsible for writing object's state
 	 */
-	/*
-	 * private void writeObject(java.io.ObjectOutputStream out) throws
-	 * IOException { out.defaultWriteObject(); }
-	 */
+	
+	 private void writeObject(java.io.ObjectOutputStream out) throws
+	 IOException { out.defaultWriteObject(); }
+	 
 
 	/*
 	 * Use this method to override default de-serialization process If
 	 * implemented, then this class is responsible for reading object's state
 	 */
-	/*
-	 * private void readObject(java.io.ObjectInputStream in) throws IOException,
-	 * ClassNotFoundException {
-	 * 
-	 * }
-	 */
+	
+	 private void readObject(java.io.ObjectInputStream in) throws IOException,
+	 ClassNotFoundException {
+		 in.readObject();
+	 }
+	 
 
 	/*
 	 * The readObject method is responsible for reading from the stream and

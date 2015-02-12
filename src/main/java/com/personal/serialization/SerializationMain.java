@@ -48,6 +48,7 @@ public class SerializationMain {
 			e.printStackTrace();
 		}
 		
+		System.out.println(String.format("HashCode of initial object: %s, HashCode of deserialized object: %s", bean.hashCode(), beanDeserialized.hashCode()));
 		System.out.println(beanDeserialized.equals(bean) ? "Objects are equal" : "Objects are not equal");
 
 	}

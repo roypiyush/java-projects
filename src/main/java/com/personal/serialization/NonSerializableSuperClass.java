@@ -6,6 +6,7 @@ public class NonSerializableSuperClass {
 	
 	public NonSerializableSuperClass() {
 		super();
+		System.out.println("Getting object of NonSerializableSuperClass");
 	}
 	
 	/*
