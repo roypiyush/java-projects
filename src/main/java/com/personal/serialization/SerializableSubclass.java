@@ -1,6 +1,8 @@
 package com.personal.serialization;
 
 import java.io.IOException;
+import java.io.ObjectInputStream.GetField;
+import java.io.ObjectOutputStream.PutField;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
@@ -15,6 +17,7 @@ public class SerializableSubclass extends NonSerializableSuperClass implements
 
 	private static String staticString;
 
+	private String newValue;
 	private String name;
 	private String value;
 
@@ -28,8 +31,13 @@ public class SerializableSubclass extends NonSerializableSuperClass implements
 	 * implemented, then this class is responsible for writing object's state
 	 */
 	
-	 private void writeObject(java.io.ObjectOutputStream out) throws
-	 IOException { out.defaultWriteObject(); }
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		PutField putFields = out.putFields();
+		putFields.put("name", name);
+		putFields.put("newValue", newValue);
+		putFields.put("value", value);
+		out.writeFields();
+	}
 	 
 
 	/*
@@ -39,7 +47,10 @@ public class SerializableSubclass extends NonSerializableSuperClass implements
 	
 	 private void readObject(java.io.ObjectInputStream in) throws IOException,
 	 ClassNotFoundException {
-		 in.readObject();
+		 GetField readFields = in.readFields();
+		 newValue = (String) readFields.get("newValue", null);
+		 name = (String) readFields.get("name", null);
+		 value = (String) readFields.get("value", null);
 	 }
 	 
 
@@ -95,6 +106,14 @@ public class SerializableSubclass extends NonSerializableSuperClass implements
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getNewValue() {
+		return newValue;
+	}
+
+	public void setNewValue(String newValue) {
+		this.newValue = newValue;
 	}
 
 	@Override

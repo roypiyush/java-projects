@@ -11,6 +11,7 @@ public class SerializationMain {
 	public static void main(String[] args) {
 		
 		SerializableSubclass bean = new SerializableSubclass();
+		bean.setNewValue("New value");
 		bean.setName("Piyush");
 		bean.setValue("Priceless");
 		
@@ -41,15 +42,15 @@ public class SerializationMain {
 	         System.out.printf("De-Serializing object: %s with Super Internal Field: %s\n", beanDeserialized, beanDeserialized.getInternalField());
 	         oin.close();
 	         fileIn.close();
-	      }catch(IOException i)
-	      {
-	          i.printStackTrace();
-	      } catch (ClassNotFoundException e) {
+		} catch (IOException i) {
+			i.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println(String.format("HashCode of initial object: %s, HashCode of deserialized object: %s", bean.hashCode(), beanDeserialized.hashCode()));
-		System.out.println(beanDeserialized.equals(bean) ? "Objects are equal" : "Objects are not equal");
+//		System.out.println(String.format("HashCode of initial object: %s, HashCode of deserialized object: %s", bean.hashCode(), beanDeserialized.hashCode()));
+//		System.out.println(beanDeserialized.equals(bean) ? "Objects are equal" : "Objects are not equal");
 
 	}
 

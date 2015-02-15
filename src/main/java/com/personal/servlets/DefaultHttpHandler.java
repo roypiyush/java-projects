@@ -39,9 +39,9 @@ public class DefaultHttpHandler implements HttpHandler {
 				}
 			}
 
-			// sendStringResponse(t);
+			 sendStringResponse(t);
 			// sendFile(t);
-			fetchExternalLink(t);
+//			fetchExternalLink(t);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +49,15 @@ public class DefaultHttpHandler implements HttpHandler {
 	}
 
 	void sendStringResponse(HttpExchange t) throws IOException {
-		String response = "This is the response";
+		String response = "<head><style>"
+				+ "body {background-color:lightgray} "
+				+ "h1   {color:blue} "
+				+ "p    {color:lightgreen}"
+				+ "</style></head>"
+				+ "<body>"
+				+ "<h1>This is a heading</h1>"
+				+ "<p>This is a paragraph.</p>"
+				+ "</body>";
 		System.out.println(t.getRequestMethod());
 		t.sendResponseHeaders(200, response.length());
 		OutputStream os = t.getResponseBody();
@@ -80,7 +88,7 @@ public class DefaultHttpHandler implements HttpHandler {
 	}
 
 	void fetchExternalLink(HttpExchange t) throws IOException {
-		URL hp = new URL("http://in.yahoo.com/?p=us");
+		URL hp = new URL("https://www.google.co.in");
 		URLConnection hpCon = hp.openConnection();
 		InputStream input = hpCon.getInputStream();
 
