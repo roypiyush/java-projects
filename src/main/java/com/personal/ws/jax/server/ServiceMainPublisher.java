@@ -3,6 +3,7 @@ package com.personal.ws.jax.server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -18,8 +19,14 @@ public class ServiceMainPublisher {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(100, 500, 50,
-				TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(100),
+		ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(3, 10, 50,
+				TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(10000), new ThreadFactory() {
+					
+					@Override
+					public Thread newThread(Runnable r) {
+						return new Thread(r);
+					}
+				},
 				new ThreadPoolExecutor.CallerRunsPolicy());
 
 		Endpoint endpoint = Endpoint

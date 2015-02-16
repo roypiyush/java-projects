@@ -7,8 +7,8 @@ public class LeftRightDeadlockMain {
 
 	public void leftRight() {
 		synchronized (left) {
+			doSomething();
 			synchronized (right) {
-				doSomething();
 			}
 		}
 	}
@@ -16,7 +16,7 @@ public class LeftRightDeadlockMain {
 	public void rightLeft() {
 		synchronized (right) {
 			synchronized (left) {
-				doSomethingElse();
+				doSomething();
 			}
 		}
 	}
@@ -28,15 +28,6 @@ public class LeftRightDeadlockMain {
 			e.printStackTrace();
 		}
 		System.out.println("Doing something.");
-	}
-
-	private void doSomethingElse() {
-		try {
-			Thread.sleep(70);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Doing something Else.");
 	}
 
 	public static void main(String[] args) {
