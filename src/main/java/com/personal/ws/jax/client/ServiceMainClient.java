@@ -19,7 +19,7 @@ public class ServiceMainClient {
 
 		long startTime = System.currentTimeMillis();
 
-		int threadCount = 5000;
+		int threadCount = 3;
 		WebServiceRunnable[] runnable = new WebServiceRunnable[threadCount];
 
 		for (int i = 0; i < runnable.length; i++) {
