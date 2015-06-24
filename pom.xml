@@ -6,6 +6,7 @@
 	<version>1.0.0.1-SNAPSHOT</version>
 	<name>Java Projects</name>
 	<description>This is a composite of java applications</description>
+
 	<properties>
 		<jettyVersion>9.0.2.v20130417</jettyVersion>
 		<slf4jVersion>1.7.7</slf4jVersion>
