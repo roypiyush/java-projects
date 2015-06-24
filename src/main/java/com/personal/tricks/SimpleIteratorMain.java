@@ -23,6 +23,12 @@ class SimpleIterator implements Iterator<Object> {
 		return new Object();
 	}
 
+	@Override
+	public void remove() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 class HolderCollection<E> implements Iterable<Object> {

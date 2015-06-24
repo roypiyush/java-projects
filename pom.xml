@@ -10,7 +10,7 @@
 		<jettyVersion>9.0.2.v20130417</jettyVersion>
 		<slf4jVersion>1.7.7</slf4jVersion>
 		<encoding>utf-8</encoding>
-		<java-version>1.8</java-version>
+		<java-version>1.6</java-version>
 	</properties>
 
 	<dependencies>
