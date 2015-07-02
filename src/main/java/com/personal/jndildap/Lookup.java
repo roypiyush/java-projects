@@ -14,6 +14,7 @@ public class Lookup {
 
 	public static void main(String[] args) {
 
+		long start = System.currentTimeMillis();
 		// Set up the environment for creating the initial context
 		Hashtable<String, Object> env = new Hashtable<String, Object>(11);
 		env.put(Context.INITIAL_CONTEXT_FACTORY,
@@ -53,6 +54,8 @@ public class Lookup {
 					e.printStackTrace();
 				}
 		}
+		
+		System.out.println(String.format("Completed in %sms", System.currentTimeMillis() - start));
 
 	}
 
