@@ -10,11 +10,15 @@ package com.personal.tricks;
 public class WideAutoVararg {
 
 	void print(Integer i) {
-		System.out.println("Long");
+		System.out.println("a");
 	}
 	
-	void print(long i) {
-		System.out.println("long");
+	void print(short i) {
+		System.out.println("b");
+	}
+	
+	void print(int i) {
+		System.out.println("c");
 	}
 	
 	/**
@@ -22,7 +26,7 @@ public class WideAutoVararg {
 	 */
 	public static void main(String[] args) {
 		WideAutoVararg o = new WideAutoVararg();
-		int i = 1;
+		char i = 'c';
 		o.print(i);
 
 	}

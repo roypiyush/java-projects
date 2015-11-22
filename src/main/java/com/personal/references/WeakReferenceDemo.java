@@ -25,13 +25,15 @@ public class WeakReferenceDemo {
         map = null; // making weakly referenced
         
         int i = 0;
-        while (myMap.get() != null) {
+        while (true) {
         	// Use get() method to refer to actual object
-			myMap.get().put(i++, "test" + i);
+			Map<Integer, String> map2 = myMap.get();
+			if(map2 == null)
+				map2 = new HashMap<Integer, String>();
+			map2.put(i++, "test" + i);
 			System.out.println("im still working!!!!");
 
         }
-        System.out.println("*******im free*******");
     }
 
 

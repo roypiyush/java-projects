@@ -14,6 +14,7 @@ public class EventSource extends Observable implements Runnable {
             isr = new InputStreamReader(System.in);
             br = new BufferedReader(isr);
             while (true) {
+            	System.out.print("Enter Text > ");
                 String response = br.readLine();
                 setChanged();
                 notifyObservers(response);
