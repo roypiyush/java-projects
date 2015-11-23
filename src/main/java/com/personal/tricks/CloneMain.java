@@ -2,7 +2,7 @@ package com.personal.tricks;
 
 import com.personal.model.MySimpleJavaBean;
 
-class MainMethodTest {
+class CloneMain {
 
 	/**
 	 * @param args
