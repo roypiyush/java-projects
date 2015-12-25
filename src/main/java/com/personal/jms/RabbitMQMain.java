@@ -6,6 +6,10 @@ package com.personal.jms;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
 /**
  * @author piyush
  *
@@ -18,7 +22,17 @@ public class RabbitMQMain {
 	 * @throws TimeoutException 
 	 */
 	public static void main(String[] args) throws IOException, TimeoutException {
-
+		
+		ConnectionFactory factory = new ConnectionFactory();
+	    factory.setHost("localhost");
+	    Connection connection = factory.newConnection();
+	    Channel channel = connection.createChannel();
+	    String queueName = "hello";
+	    new MessageReceiver().receiveMessage(connection, queueName);
+	    new MessageSender().sendMessage(channel, queueName);
+	    
+	    channel.close();
+	    connection.close();
 	}
 
 }
