@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.personal.jms;
+package com.personal.jms.rabbitmq.ptp.helloworld;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;

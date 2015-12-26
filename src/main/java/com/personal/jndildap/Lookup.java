@@ -44,8 +44,8 @@ public class Lookup {
 				System.out.println(attributes.get(id));
 			}
 
-		} catch (NamingException e) {
-			System.out.println("Lookup failed: " + e.getCause().getMessage());
+		} catch (Exception e) {
+			System.err.println("Lookup failed: " + e.getMessage());
 		} finally {
 			if (ctx != null)
 				try {
