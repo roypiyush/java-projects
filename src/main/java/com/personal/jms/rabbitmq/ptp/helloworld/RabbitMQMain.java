@@ -28,8 +28,11 @@ public class RabbitMQMain {
 	    Connection connection = factory.newConnection();
 	    Channel channel = connection.createChannel();
 	    String queueName = "hello";
-	    new MessageReceiver().receiveMessage(connection, queueName);
-	    new MessageSender().sendMessage(channel, queueName);
+	    
+	    for(int i = 0; i < 5; i++) {
+	    	new MessageReceiver().receiveMessage(connection, queueName);
+		    new MessageSender().sendMessage(channel, queueName, "hello " + (i + 1));
+	    }
 	    
 	    channel.close();
 	    connection.close();
