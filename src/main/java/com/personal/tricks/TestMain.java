@@ -27,8 +27,8 @@ public class TestMain {
 		System.out.println("Printing default char: " + defaultChar);
 	}
 	
-	Thread thread = new Thread(new Runnable() {
-		
+	private class MyRunnable implements Runnable {
+
 		@Override
 		public void run() {
 			System.out.println("Running from extra thread");
@@ -37,8 +37,12 @@ public class TestMain {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
 		}
-	});
+		
+	}
+	
+	Thread thread = new Thread(new MyRunnable());
 	/**
 	 * @param args
 	 */
