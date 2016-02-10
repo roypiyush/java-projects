@@ -132,16 +132,25 @@ public class JdbcMain {
 		String password = "root";
 		String dmlQuery1 = "select * from Employment";
 		String dmlQuery2 = "select * from Company";
+		long startTime = 0;
+		
 		
 		dataSource = getMySQLDataSource(host, databaseName);
 		simpleQuery(dataSource, username, password, "show tables");
+		startTime = System.currentTimeMillis();
+		System.out.printf("Time to execute [show tables] %dms\n", System.currentTimeMillis() - startTime);
+		
 		
 		dataSource = getMySQLPooledDataSource(host, databaseName);
+		startTime = System.currentTimeMillis();
 		simpleQuery(dataSource, username, password, dmlQuery1);
+		System.out.printf("Time to execute [%s] %dms\n", dmlQuery1, System.currentTimeMillis() - startTime);
+		
 		
 		dataSource = getMySQLXADataSource(host, databaseName);
+		startTime = System.currentTimeMillis();
 		simpleQuery(dataSource, username, password, dmlQuery2);
-
+		System.out.printf("Time to execute [%s] %dms\n", dmlQuery2, System.currentTimeMillis() - startTime);
 		
 		System.out.println("******** Stored Procedure Call using " + " direct connection by registering driver" + " ********");
 		
