@@ -23,10 +23,11 @@ public class ClusteringServlet extends HttpServlet {
 		
 		Cookie[] cookies = req.getCookies();
 		
-		System.out.println("Hey, I'm processing your request " + cookies[0].getValue());
+		String sessionIdFromBrowser = (cookies.length > 0 ? cookies[0].getValue() : "");
+		System.out.println("Hey, I'm processing your request " + sessionIdFromBrowser);
 		HttpSession session = req.getSession(true);
 		
-		System.out.printf("Session1 %s and Session2 : %s", cookies[0].getValue().split("\\.")[0], session.getId());
+		System.out.printf("Session1 %s and Session2 : %s", sessionIdFromBrowser.split("\\.")[0], session.getId());
 		
 		session.setAttribute("expiryTime", session.getId());
 		

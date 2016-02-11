@@ -3,6 +3,10 @@
  */
 package com.personal.embedded_jetty.cluster;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.session.JDBCSessionIdManager;
 import org.eclipse.jetty.server.session.JDBCSessionManager;
@@ -40,6 +44,7 @@ public class ClusteredJettyRunner {
  		ServletContextHandler context = new ServletContextHandler();
  		context.setContextPath("/jetty");
  		context.addServlet(ClusteringServlet.class, "/servlet");
+ 		context.addFilter(AuthenticationFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
  		server.setHandler(context);
  		context.setSessionHandler(sessionHandler);
  		try {
