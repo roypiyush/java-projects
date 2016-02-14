@@ -34,15 +34,7 @@ public class ClusteredJettyRunner {
 		sessionIdManager.setScavengeInterval(scavengeInterval);
 		server.setSessionIdManager(sessionIdManager);
 
- 		JDBCSessionManager sessionManager = new JDBCSessionManager() {
- 			public void setMaxInactiveInterval(int secs) {
- 				try {
-					super.setMaxInactiveInterval(secs);
-				} catch (IllegalStateException e) {
-					System.out.println("Invalid Session Exception caught");
-				}
- 			}
- 		};
+ 		JDBCSessionManager sessionManager = new JDBCSessionManager();
  		sessionManager.setSaveInterval(30);
  		sessionManager.setSessionIdManager(server.getSessionIdManager());
  		sessionManager.setMaxInactiveInterval(scavengeInterval);
