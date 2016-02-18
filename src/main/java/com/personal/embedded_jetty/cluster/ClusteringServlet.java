@@ -21,14 +21,15 @@ public class ClusteringServlet extends HttpServlet {
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
-		Cookie[] cookies = req.getCookies();
-		
-		String sessionIdFromBrowser = (cookies.length > 0 ? cookies[0].getValue() : "");
-		System.out.println("Hey, I'm processing your request " + sessionIdFromBrowser);
 		HttpSession session = req.getSession(true);
-		cookies[0] = new Cookie("jsessionid", session.getId());
-		cookies[0].setMaxAge(30);
-		System.out.printf("Session1 %s and Session2 : %s\n", sessionIdFromBrowser.split("\\.")[0], session.getId());
+		Cookie[] cookies = req.getCookies();
+		String sessionIdFromBrowser = (cookies.length > 0 ? cookies[0].getValue() : "");
+		
+		if(!sessionIdFromBrowser.equalsIgnoreCase(session.getId())) {
+			System.out.println("This is new or expired session");
+		}
+		
+		System.out.printf("Old Session %s and New Session : %s\n", sessionIdFromBrowser.split("\\.")[0], session.getId());
 		
 		session.setAttribute("expiryTime", session.getId());
 		

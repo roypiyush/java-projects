@@ -19,6 +19,7 @@ public class MakeProcessorBusy {
 		for (int i = 0; i < processors; i++) {
 			ProcessorBusyThread runner1 = new ProcessorBusyThread(timeToStop );
 			Thread t1 = new Thread(runner1);
+			t1.setPriority(10);
 			t1.start();
 		}
 		

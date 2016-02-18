@@ -12,8 +12,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,16 +34,17 @@ public class AuthenticationFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		Request r = (Request) request;
-
+		HttpServletRequest req = (HttpServletRequest) request;
+		@SuppressWarnings("unused")
+		HttpServletResponse res = (HttpServletResponse) response;
 		try {
 		
-			if(r.getCookies().length == 0) {
+			if(req.getCookies().length == 0) {
 				LOGGER.info("This is new session");
 			}
 			else {
 				
-				String sessionId = r.getCookies().length == 0 ? "" : r.getCookies()[0].getValue().split("\\.")[0];
+				String sessionId = req.getCookies().length == 0 ? "" : req.getCookies()[0].getValue().split("\\.")[0];
 				Connection connection = JdbcMain.getConnection("jdbc:mysql://127.0.0.1:3306/sessions", "root", "root");
 				String query = String.format("select id from JettySessionIds where id = '%s'", sessionId);
 				PreparedStatement statement = connection.prepareStatement(query);
