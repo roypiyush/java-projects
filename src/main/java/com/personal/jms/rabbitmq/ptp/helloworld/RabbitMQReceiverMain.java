@@ -14,7 +14,7 @@ import com.rabbitmq.client.ConnectionFactory;
  * @author piyush
  *
  */
-public class RabbitMQMain {
+public class RabbitMQReceiverMain {
 
 	/**
 	 * @param args
@@ -29,9 +29,9 @@ public class RabbitMQMain {
 	    Channel channel = connection.createChannel();
 	    String queueName = "hello";
 	    
+	    MessageReceiver messageReceiver = new MessageReceiver();
 	    for(int i = 0; i < 5; i++) {
-	    	new MessageReceiver().receiveMessage(connection, queueName);
-		    new MessageSender().sendMessage(channel, queueName, "hello " + (i + 1));
+			messageReceiver.receiveMessage(connection, queueName);
 	    }
 	    
 	    channel.close();
