@@ -22,6 +22,7 @@ public class TablePrinter {
 			System.out.println(String.format("%d X %d = %d", tableOf, i, i
 					* tableOf));
 		}
+		System.out.println();
 	}
 
 }

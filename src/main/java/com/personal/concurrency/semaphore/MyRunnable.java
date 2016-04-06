@@ -16,7 +16,7 @@ public class MyRunnable implements Runnable {
 			sharedObject.perform(Thread.currentThread().getName());
 			System.out.println(Thread.currentThread().getName()
 					+ " I wanna go to sleep\n");
-			Thread.sleep(3000);
+			Thread.sleep(10000);
 			sharedObject.semaphore.release();
 
 		} catch (InterruptedException e) {
