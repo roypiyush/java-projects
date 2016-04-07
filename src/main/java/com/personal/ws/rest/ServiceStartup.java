@@ -11,7 +11,7 @@ import org.eclipse.jetty.server.session.JDBCSessionManager;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.eclipse.jetty.util.thread.ExecutorThreadPool;
 
 /**
  * @author piyush
@@ -24,7 +24,7 @@ public class ServiceStartup {
 	 */
 	public static void main(String[] args) {
 		
-		QueuedThreadPool threadPool = new QueuedThreadPool(8, 8);
+		ExecutorThreadPool threadPool = new ExecutorThreadPool(8, 16, 5000);
 		final Server server = new Server(threadPool);
 		ServletContextHandler contextHandler = new ServletContextHandler(
 				ServletContextHandler.SESSIONS);
@@ -59,6 +59,8 @@ public class ServiceStartup {
 		contextHandler.setSessionHandler(sessionHandler);
 		
 		try {
+			org.eclipse.jetty.util.log.Log.getRootLogger().setDebugEnabled(false);
+			
 			server.start();
 			server.join();
 		} catch (InterruptedException e) {
