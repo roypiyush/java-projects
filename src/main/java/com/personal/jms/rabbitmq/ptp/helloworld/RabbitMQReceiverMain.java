@@ -27,11 +27,17 @@ public class RabbitMQReceiverMain {
 	    factory.setHost("localhost");
 	    Connection connection = factory.newConnection();
 	    Channel channel = connection.createChannel();
-	    String queueName = "hello";
+	    
+	    String WARN = "WARN";
+	    String ERROR = "ERROR";
+	    String INFO = "INFO";
+	    
 	    
 	    MessageReceiver messageReceiver = new MessageReceiver();
 	    for(int i = 0; i < 5; i++) {
-			messageReceiver.receiveMessage(connection, queueName);
+			messageReceiver.receiveMessage(connection, WARN);
+			messageReceiver.receiveMessage(connection, ERROR);
+			messageReceiver.receiveMessage(connection, INFO);
 	    }
 	    
 	    channel.close();

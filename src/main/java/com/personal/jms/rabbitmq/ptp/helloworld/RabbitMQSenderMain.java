@@ -27,11 +27,15 @@ public class RabbitMQSenderMain {
 	    factory.setHost("localhost");
 	    Connection connection = factory.newConnection();
 	    Channel channel = connection.createChannel();
-	    String queueName = "hello";
+	    String WARN = "WARN";
+	    String ERROR = "ERROR";
+	    String INFO = "INFO";
 	    
 	    MessageSender messageSender = new MessageSender();
 	    for(int i = 0; i < 5; i++) {
-			messageSender.sendMessage(channel, queueName, "hello " + (i + 1));
+	    	messageSender.sendMessage(channel, ERROR, "ERROR " + (i + 1));
+	    	messageSender.sendMessage(channel, WARN, "WARN " + (i + 1));
+			messageSender.sendMessage(channel, INFO, "INFO " + (i + 1));
 	    }
 	    
 	    channel.close();
