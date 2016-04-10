@@ -8,6 +8,8 @@ public class ZooKeeperGetData {
 	public static void nodeExists(ZooKeeper zooKeeper, String path) {
 
 		try {
+			long start = System.currentTimeMillis();
+			
 			Stat stat = zooKeeper.exists(path, true);
 
 			if (stat != null) {
@@ -19,6 +21,7 @@ public class ZooKeeperGetData {
 			} else {
 				System.out.println("Node does not exists");
 			}
+			System.out.println("Fetch data from path " + path + " in " + (System.currentTimeMillis() - start) + "ms");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

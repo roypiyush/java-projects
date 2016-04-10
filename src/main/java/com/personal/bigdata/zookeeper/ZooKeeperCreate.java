@@ -12,9 +12,10 @@ public class ZooKeeperCreate {
 		byte[] data = "My first zookeeper app".getBytes();
 		
 		try {
+			long start = System.currentTimeMillis();
 			String actualPath = zooKeeper.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE,
 					CreateMode.PERSISTENT);
-			System.out.println("Created at actual path : " + actualPath);
+			System.out.println("Created path " + actualPath + " in " + (System.currentTimeMillis() - start) + "ms");
 			
 		} catch (KeeperException | InterruptedException e) {
 			e.printStackTrace();
