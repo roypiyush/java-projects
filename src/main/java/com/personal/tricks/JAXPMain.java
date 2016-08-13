@@ -29,6 +29,12 @@ class XMLTagsEvent extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
+		
+		int totalAttr = attributes.getLength();
+		for (int i = 0; i < totalAttr; i++) {
+			System.out.println("Attribute " + attributes.getQName(i) + " " + attributes.getValue(i));
+		}
+		
 		System.out.println(String.format("Start of element-> uri: %s, localName: %s, qName: %s", uri, localName, qName));
 	}
 
