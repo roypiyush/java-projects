@@ -1,4 +1,4 @@
-package com.personal.embedded_jetty.soapforward;
+package com.personal.embedded.jetty.soapforward;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

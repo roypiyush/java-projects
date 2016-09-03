@@ -1,4 +1,4 @@
-package com.personal.embedded_jetty.cluster;
+package com.personal.embedded.jetty.cluster;
 
 import java.io.IOException;
 
