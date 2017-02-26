@@ -21,7 +21,7 @@ public class EchoServer {
     public static final String HOST = "localhost";
     public static final int PORT = 7777;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         // Create a FilterChain using FilterChainBuilder
         FilterChainBuilder filterChainBuilder = FilterChainBuilder.stateless();
 
@@ -47,8 +47,7 @@ public class EchoServer {
             // start the transport
             transport.start();
 
-            System.out.println("Press any key to stop the server...");
-            System.in.read();
+            Thread.currentThread().join();
         } finally {
         	System.out.println("Stopping transport...");
             // stop the transport
