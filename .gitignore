@@ -2,4 +2,6 @@
 .project
 .settings
 target
-
+.idea/
+java-projects.iml
+src/main/main.iml
