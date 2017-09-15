@@ -37,28 +37,5 @@ public class EulerDemo {
 	{
 		return number1 * number2 / findHCF(number1, number2);
 	}
-	
-	public static void main(String[] args) {
-		
-		EulerDemo eulerDemo = new EulerDemo();
-
-		int numbers[] = {14,56,63,36};
-		
-		int HCF = numbers[0];
-		for (int i = 1; i < numbers.length; i++) {
-			// Finding HCF of multiple numbers
-			HCF = eulerDemo.findHCF(HCF, numbers[i]);
-		}
-		System.out.println(HCF);
-		
-		
-		int LCM = numbers[0];
-		for (int i = 1; i < numbers.length; i++) {
-			// Finding LCM of multiple numbers
-			LCM = eulerDemo.findLCM(LCM, numbers[i]);
-		}
-		System.out.println(LCM);
-		
-	}
 
 }
