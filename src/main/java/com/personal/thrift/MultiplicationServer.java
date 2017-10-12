@@ -6,20 +6,20 @@ import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 
+@SuppressWarnings("unchecked")
 public class MultiplicationServer {
 
     public static void main(String[] args) {
         try {
             MultiplicationHandler handler = new MultiplicationHandler();
             MultiplicationService.Processor processor = new MultiplicationService.Processor(handler);
-            // Thread Initialized
-            new Thread(() -> simple(processor)).start();
+            simple(processor);
         } catch (Exception x) {
             x.printStackTrace();
         }
     }
 
-    public static void simple(MultiplicationService.Processor processor) {
+    private static void simple(MultiplicationService.Processor processor) {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
             TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));
