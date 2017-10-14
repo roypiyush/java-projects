@@ -3,6 +3,7 @@ package com.personal.thrift;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 
+@SuppressWarnings("unchecked")
 public class MultiplicationHandler implements MultiplicationService.Iface, MultiplicationService.AsyncIface {
 
     @Override

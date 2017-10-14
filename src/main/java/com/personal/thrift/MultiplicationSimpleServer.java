@@ -7,24 +7,24 @@ import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 
 @SuppressWarnings("unchecked")
-public class MultiplicationServer {
+public class MultiplicationSimpleServer {
 
     public static void main(String[] args) {
         try {
             MultiplicationHandler handler = new MultiplicationHandler();
             MultiplicationService.Processor processor = new MultiplicationService.Processor(handler);
-            simple(processor);
+            tServerTransport(processor);
         } catch (Exception x) {
             x.printStackTrace();
         }
     }
 
-    private static void simple(MultiplicationService.Processor processor) {
+    private static void tServerTransport(MultiplicationService.Processor processor) {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
             TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));
 
-            System.out.println("Starting the simple server...");
+            System.out.println("Starting the tServerTransport server...");
             server.serve();
         } catch (Exception e) {
             e.printStackTrace();
