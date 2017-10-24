@@ -13,6 +13,12 @@
 		<encoding>utf-8</encoding>
 		<java-version>1.8</java-version>
 		<glassfish-jersey>2.5.1</glassfish-jersey>
+
+		<thrift.exe>/usr/bin/thrift</thrift.exe>
+		<thrift.interface>${basedir}/src/main/resources/multiple.thrift</thrift.interface>
+		<gendir.target>${basedir}/target/generated-sources</gendir.target>
+		<gendir.namespace>com/personal/thrift/gen</gendir.namespace>
+		<gendir.src>${basedir}/src/main/java/com/personal/thrift/gen</gendir.src>
 	</properties>
 
 	<dependencies>
@@ -124,7 +130,17 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.thrift</groupId>
+			<artifactId>libthrift</artifactId>
+			<version>0.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.thrift</groupId>
+			<artifactId>libfb303</artifactId>
+			<version>0.9.3</version>
+			<type>pom</type>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
