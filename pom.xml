@@ -13,7 +13,8 @@
 		<encoding>utf-8</encoding>
 		<java-version>1.8</java-version>
 		<glassfish-jersey>2.5.1</glassfish-jersey>
-
+        <lucene-version>7.1.0</lucene-version>
+        <opennlp-version>1.8.2</opennlp-version>
 		<thrift.exe>/usr/bin/thrift</thrift.exe>
 		<thrift.interface>${basedir}/src/main/resources/multiple.thrift</thrift.interface>
 		<gendir.target>${basedir}/target/generated-sources</gendir.target>
@@ -144,13 +145,33 @@
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-core</artifactId>
-			<version>7.1.0</version>
+			<version>${lucene-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
 			<artifactId>lucene-queryparser</artifactId>
-			<version>7.1.0</version>
+			<version>${lucene-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-tools</artifactId>
+			<version>${opennlp-version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.opennlp</groupId>
+            <artifactId>opennlp-uima</artifactId>
+            <version>${opennlp-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.opennlp</groupId>
+            <artifactId>opennlp-morfologik-addon</artifactId>
+            <version>${opennlp-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.opennlp</groupId>
+            <artifactId>opennlp-brat-annotator</artifactId>
+            <version>${opennlp-version}</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<plugins>
