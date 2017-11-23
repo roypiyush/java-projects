@@ -25,6 +25,11 @@ public class MultiplicationSimpleServer {
             TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));
 
             System.out.println("Starting the tServerTransport server...");
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                System.out.println("Stopping Server...");
+                server.stop();
+                System.out.println("Server Stopped");
+            }));
             server.serve();
         } catch (Exception e) {
             e.printStackTrace();
