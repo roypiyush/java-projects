@@ -11,7 +11,7 @@ public class SentencePosDetection {
 
     public static void main(String args[]) throws Exception {
 
-        String paragraph = "Hi. How are you? Welcome to github/roypiyush. Here you are given with examples of opennlp.";
+        String paragraph = "Hi. How are you? Welcome to github/roypiyush. Here you are given with examples of opennlp?";
 
         try (//Loading sentence detector model
              InputStream inputStream = new FileInputStream(new SentenceDetectionME().getClass().getClassLoader()
