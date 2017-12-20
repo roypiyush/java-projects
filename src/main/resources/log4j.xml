@@ -14,7 +14,7 @@
         <param name="File" value="/tmp/log.out" />
         <layout class="com.personal.log4j.CustomPatternLayout">
             <param name="ConversionPattern"
-                   value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n" />
+                   value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n %throwable{10}" />
         </layout>
     </appender>
 
