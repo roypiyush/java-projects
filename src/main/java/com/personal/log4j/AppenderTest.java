@@ -17,6 +17,6 @@ public class AppenderTest {
         bean.setName("Some Name");
         bean.setValue("Some Value");
 
-        logger.error("Hello there, Some Random int {} {}", bean, new Random().nextInt(), new NullPointerException("Hello, I am good old NPE :)"));
+        logger.error("Hello there, Some Random int {} {}", bean, new Random().nextInt());
     }
 }

@@ -10,26 +10,27 @@ import java.util.regex.Pattern;
  */
 public class CustomPatternLayout extends EnhancedPatternLayout {
 
-    private int bytes = -1;
+    private int maxLength = 2 * 1024;
 
-    public void setBytes(int bytes) {
-        this.bytes = bytes;
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
     }
-    private static final Pattern DISALLOWED_CHARACTERS_PATTERN_FOR_LOG_FORGING = Pattern.compile("([^A-Za-z0-9.:\\-_,\\.\\[\\]()\\n\\s])");
+
+    private static final Pattern FILTER_PATTERN = Pattern.compile("([^A-Za-z0-9.:\\-_,\\.\\[\\]()\\n\\s])");
     @Override
     public String format(LoggingEvent event) {
         String format = super.format(event);
-        if (bytes != -1 && format.length() > bytes) {
-            format = format.substring(0, bytes);
+        if (format.length() > maxLength) {
+            format = format.substring(0, maxLength) + "\n";
         }
-        return sanitizeForging(format);
+        return sanitize(format);
     }
 
-    public static String sanitizeForging(String value) {
+    public static String sanitize(String value) {
         if (value == null || value.trim().isEmpty()) {
             return value;
         }
         // return value;
-        return DISALLOWED_CHARACTERS_PATTERN_FOR_LOG_FORGING.matcher(value).replaceAll("_");
+        return FILTER_PATTERN.matcher(value).replaceAll("_");
     }
 }

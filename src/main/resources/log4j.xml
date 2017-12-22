@@ -4,7 +4,7 @@
                      xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
-        <layout class="org.apache.log4j.PatternLayout">
+        <layout class="com.personal.log4j.CustomPatternLayout">
             <param name="ConversionPattern"
                    value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n" />
         </layout>
@@ -15,6 +15,7 @@
         <layout class="com.personal.log4j.CustomPatternLayout">
             <param name="ConversionPattern"
                    value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n %throwable{10}" />
+            <param name="maxLength" value="5000000000000000" />
         </layout>
     </appender>
 
