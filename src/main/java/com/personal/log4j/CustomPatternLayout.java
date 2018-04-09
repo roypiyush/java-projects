@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  */
 public class CustomPatternLayout extends EnhancedPatternLayout {
 
-    private int maxLength = 2 * 1024;
+    private int maxLength = Integer.MAX_VALUE;
 
     public void setMaxLength(int maxLength) {
         this.maxLength = maxLength;

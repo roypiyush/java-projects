@@ -15,7 +15,7 @@
         <layout class="com.personal.log4j.CustomPatternLayout">
             <param name="ConversionPattern"
                    value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n %throwable{10}" />
-            <param name="maxLength" value="5000000000000000" />
+            <param name="maxLength" value="50000" />
         </layout>
     </appender>
 
