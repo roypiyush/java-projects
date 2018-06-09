@@ -1,4 +1,4 @@
-package com.personal.jdbc;
+package com.personal.db.jdbc;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

@@ -21,6 +21,7 @@
 		<gendir.namespace>com/personal/thrift/gen</gendir.namespace>
 		<gendir.src>${basedir}/src/main/java/com/personal/thrift/gen</gendir.src>
 		<avro.version>1.8.2</avro.version>
+		<arangodb.version>4.2.2</arangodb.version>
 	</properties>
 
 	<dependencies>
@@ -187,6 +188,11 @@
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
 			<version>${avro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.arangodb</groupId>
+			<artifactId>arangodb-java-driver</artifactId>
+			<version>${arangodb.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
