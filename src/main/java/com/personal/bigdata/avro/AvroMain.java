@@ -13,6 +13,7 @@ import org.apache.avro.specific.SpecificDatumWriter;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Base64;
 
 public class AvroMain {
     public static void main(String[] args) throws Exception {

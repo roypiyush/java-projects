@@ -19,6 +19,16 @@
         </layout>
     </appender>
 
+    <category name="org" additivity="false">
+        <priority value="FATAL" />
+    </category>
+    <category name="akka" additivity="false">
+        <priority value="FATAL" />
+    </category>
+    <category name="kafka" additivity="false">
+        <priority value="FATAL" />
+    </category>
+
     <root>
         <level value="DEBUG" />
         <appender-ref ref="console" />

@@ -1,12 +1,20 @@
 package com.personal.bigdata.kafka;
 
+import com.personal.avro.User;
+import org.apache.avro.io.DatumReader;
+import org.apache.avro.io.Decoder;
+import org.apache.avro.io.DecoderFactory;
+import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -54,12 +62,21 @@ public class MessageConsumer {
             //Start processing messages
             try {
                 while (true) {
+                    DatumReader<User> datumReader = new SpecificDatumReader<>(User.class);
                     ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
-                    for (ConsumerRecord<String, String> record : records)
-                        System.out.println(record.value());
+                    for (ConsumerRecord<String, String> record : records) {
+                        String value = record.value();
+                        System.out.println("----------- OUTPUT ------------ " + value);
+                        Decoder decoder = DecoderFactory.get().binaryDecoder(Base64.getDecoder().decode(value), null);
+                        User user = datumReader.read(null, decoder);
+                        System.out.println("Received User object : " + user.toString());
+
+                    }
                 }
             } catch (WakeupException ex) {
                 System.out.println("Exception caught " + ex.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 kafkaConsumer.close();
                 System.out.println("After closing KafkaConsumer");

@@ -20,6 +20,7 @@
 		<gendir.target>${basedir}/target/generated-sources</gendir.target>
 		<gendir.namespace>com/personal/thrift/gen</gendir.namespace>
 		<gendir.src>${basedir}/src/main/java/com/personal/thrift/gen</gendir.src>
+		<avro.version>1.8.2</avro.version>
 	</properties>
 
 	<dependencies>
@@ -123,7 +124,7 @@
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-clients</artifactId>
-			<version>0.10.2.0</version>
+			<version>0.11.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -185,7 +186,7 @@
 		<dependency>
 			<groupId>org.apache.avro</groupId>
 			<artifactId>avro</artifactId>
-			<version>1.8.2</version>
+			<version>${avro.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -231,7 +232,7 @@
             <plugin>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro-maven-plugin</artifactId>
-                <version>1.8.2</version>
+                <version>${avro.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
