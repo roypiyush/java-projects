@@ -1,4 +1,4 @@
-package com.personal.bigdata.avro;
+package com.personal.serialization.avro;
 
 import com.personal.avro.User;
 import org.apache.avro.Schema;
@@ -10,12 +10,16 @@ import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.avro.specific.SpecificDatumWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.Base64;
 
 public class AvroMain {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AvroMain.class);
+
     public static void main(String[] args) throws Exception {
         InputStream resource = ClassLoader.getSystemResourceAsStream("avsc/user.avsc");
         Schema schema = new Schema.Parser().parse(resource);
@@ -29,7 +33,7 @@ public class AvroMain {
         genericRecord2.put("favorite_color", "red");
 
 
-        System.out.println("************Serialization**************");
+        LOGGER.info("************Serialization**************");
         User user1 = new User();
         user1.setName("Alyssa");
         user1.setFavoriteNumber(256);
@@ -48,15 +52,15 @@ public class AvroMain {
         dataFileWriter.append(user2);
         dataFileWriter.append(user3);
         dataFileWriter.close();
-        System.out.println("Done");
+        LOGGER.info("Done");
 
-        System.out.println("************Deserialization************");
+        LOGGER.info("************Deserialization************");
         DatumReader<User> userDatumReader = new SpecificDatumReader<>(User.class);
         DataFileReader<User> dataFileReader = new DataFileReader<User>(new File(outputFile), userDatumReader);
         User user = null;
         while (dataFileReader.hasNext()) {
             user = dataFileReader.next(user);
-            System.out.println(user);
+            LOGGER.info("User Object: {}", user);
         }
     }
 }
