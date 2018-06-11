@@ -1,12 +1,12 @@
 package com.personal.concurrency.executorframework;
 
+import com.personal.old.ws.jax.server.DataProcessor;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadFactory;
-
-import com.personal.ws.jax.server.DataProcessor;
 
 public class SimpleExecutorDemo {
 

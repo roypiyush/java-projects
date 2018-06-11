@@ -2,7 +2,7 @@ package com.personal.concurrency.threadlocal;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.personal.designpatterns.singleton.BillPughSingleton;
+import com.personal.old.designpatterns.singleton.BillPughSingleton;
 
 class ThreadId {
     // Atomic integer containing the next thread ID to be assigned

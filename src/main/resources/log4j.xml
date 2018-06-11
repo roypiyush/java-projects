@@ -10,9 +10,9 @@
         </layout>
     </appender>
 
-    <!--<appender name="file" class="com.personal.log4j.CustomAppender">
+    <!--<appender name="file" class="com.personal.old.log4j.CustomAppender">
         <param name="File" value="/tmp/log.out" />
-        <layout class="com.personal.log4j.CustomPatternLayout">
+        <layout class="com.personal.old.log4j.CustomPatternLayout">
             <param name="ConversionPattern"
                    value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n %throwable{10}" />
             <param name="maxLength" value="50000" />
