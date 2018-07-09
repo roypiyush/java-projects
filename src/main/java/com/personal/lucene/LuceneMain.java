@@ -53,6 +53,22 @@ public class LuceneMain {
         ScoreDoc[] hits = docs.scoreDocs;
 
         // 4. display results
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         System.out.println("Found " + hits.length + " hits.");
         for(int i=0;i<hits.length;++i) {
             int docId = hits[i].doc;
