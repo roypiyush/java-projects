@@ -22,6 +22,7 @@
 		<gendir.src>${basedir}/src/main/java/com/personal/thrift/gen</gendir.src>
 		<avro.version>1.8.2</avro.version>
 		<arangodb.version>4.2.2</arangodb.version>
+		<hbase.version>2.0.1</hbase.version>
 	</properties>
 
 	<dependencies>
@@ -193,6 +194,24 @@
 			<groupId>com.arangodb</groupId>
 			<artifactId>arangodb-java-driver</artifactId>
 			<version>${arangodb.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>${hbase.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase</artifactId>
+			<version>${hbase.version}</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 	<build>
