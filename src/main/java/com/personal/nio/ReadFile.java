@@ -1,5 +1,7 @@
 package com.personal.nio;
 
+import com.google.common.base.Stopwatch;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -10,28 +12,51 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Below is blocking operatoin. FileChannels cannot work with non-blocking mode.
+ * Below is blocking operation. FileChannels cannot work with non-blocking mode.
  */
 public class ReadFile {
+
+
+    public static void runUsingThreads(int size, Runnable runnable) {
+        Thread[] threads = new Thread[size];
+        for (int i = 0; i < size; i++) {
+            threads[i] = new Thread(runnable);
+        }
+        for (Thread t: threads) {
+            t.start();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.out.println("Please provide file absolute location");
             return;
         }
         String file = args[0];
-        synchronousFileChannel(file);
-        System.out.println("########");
-        asyncFileChannel(file);
-        return;
+        runUsingThreads(10, () -> {
+            try {
+                synchronousFileChannel(file);
+            } catch (Exception e) {}
+        });
+
+        runUsingThreads(1, () -> {
+            try {
+                asyncFileChannel(file);
+            } catch (Exception e) {}
+        });
     }
 
     private static void asyncFileChannel(String file) throws IOException, InterruptedException, ExecutionException {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Path path = Paths.get(file);
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.READ);
         long position = 0;
         while((position = readUntilComplete(fileChannel, position)) != -1);
+        stopwatch.stop();
+        System.out.println("asyncFileChannel() " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 
     private static long readUntilComplete(AsynchronousFileChannel fileChannel, long position) throws InterruptedException, ExecutionException {
@@ -47,13 +72,14 @@ public class ReadFile {
         buffer.flip();
         byte[] data = new byte[buffer.limit()];
         buffer.get(data);
-        System.out.print(new String(data));
+//        System.out.print(new String(data));
         position = position + buffer.position();
         buffer.clear();
         return position;
     }
 
     private static void synchronousFileChannel(String file) throws IOException {
+        Stopwatch stopwatch = Stopwatch.createStarted();
         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
         FileChannel fileChannel = randomAccessFile.getChannel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(48);
@@ -62,11 +88,14 @@ public class ReadFile {
         while (bytesRead != -1) {
             byteBuffer.flip();  // make buffer ready for read
             while(byteBuffer.hasRemaining()){
-                System.out.print((char) byteBuffer.get()); // read 1 byte at a time
+                byteBuffer.get();
+//                System.out.print((char) byteBuffer.get()); // read 1 byte at a time
             }
             byteBuffer.clear(); // make buffer ready for writing
             bytesRead = fileChannel.read(byteBuffer);
         }
         randomAccessFile.close(); // Closes file channel as well
+        stopwatch.stop();
+        System.out.println("synchronousFileChannel() " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
     }
 }
