@@ -8,7 +8,7 @@ import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 
 @SuppressWarnings("unchecked")
-public class MultiplicationThreadedServer {
+public class MultiplicationThreadedServerMain {
 
     public static void main(String[] args) {
         try {

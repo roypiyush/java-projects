@@ -7,7 +7,7 @@ import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
 
 @SuppressWarnings("unchecked")
-public class MultiplicationSimpleServer {
+public class MultiplicationSimpleServerMain {
 
     public static void main(String[] args) {
         try {

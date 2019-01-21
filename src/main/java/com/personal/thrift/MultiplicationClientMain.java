@@ -6,14 +6,12 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
-public class MultiplicationClient {
+public class MultiplicationClientMain {
     public static void main(String[] args) {
 
 
         try {
-            TTransport transport;
-
-            transport = new TSocket("localhost", 9090);
+            TTransport transport = new TSocket("localhost", 9090);
             transport.open();
 
             TProtocol protocol = new TBinaryProtocol(transport);
