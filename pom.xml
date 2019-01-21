@@ -24,7 +24,9 @@
 		<arangodb.version>4.2.2</arangodb.version>
 		<hbase.version>2.0.1</hbase.version>
         <hk2.version>2.5.0-b62</hk2.version>
-    </properties>
+		<thrift.version>0.10.0</thrift.version>
+		<thrift-plugin.version>0.1.11</thrift-plugin.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -143,7 +145,7 @@
 		<dependency>
 			<groupId>org.apache.thrift</groupId>
 			<artifactId>libthrift</artifactId>
-			<version>0.10.0</version>
+			<version>${thrift.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.thrift</groupId>
@@ -277,6 +279,25 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<groupId>org.apache.thrift.tools</groupId>
+				<artifactId>maven-thrift-plugin</artifactId>
+				<version>${thrift-plugin.version}</version>
+				<configuration>
+					<thriftExecutable>${thrift.exe}</thriftExecutable>
+					<thriftSourceRoot>src/main/java/thrift</thriftSourceRoot>
+					<outputDirectory>src/main/java/generated-sources</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>thrift-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
