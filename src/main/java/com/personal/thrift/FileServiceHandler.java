@@ -25,17 +25,14 @@ public class FileServiceHandler implements com.personal.thrift.FileService.Iface
         try {
             RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
             long totalLength = randomAccessFile.length();
-            byte[] dataRead = new byte[1024];
+            byte[] dataRead = new byte[length];
             if (offset >= totalLength) {
-                return null;
-            }
-            if (offset + length > totalLength) {
-                length = (int) totalLength - (offset + length);
+                return ByteBuffer.allocate(0);
             }
             randomAccessFile.seek(offset);
             int bytesRead = randomAccessFile.read(dataRead);
             randomAccessFile.close();
-            if (bytesRead < dataRead.length) {
+            if (bytesRead < length) {
                 byte[] bytes = new byte[bytesRead];
                 for (int i = 0; i < bytesRead; i++) {
                     bytes[i] = dataRead[i];

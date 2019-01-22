@@ -27,13 +27,15 @@ public class FileServiceSyncClientMain {
         int length = 1024;
         RandomAccessFile randomAccessFile = new RandomAccessFile(new File("/tmp/downloaded.avi") ,"rw");
         randomAccessFile.seek(offset);
+        int i = 0;
         while (true) {
             ByteBuffer rawData = client.downloadFile("/home/piyush/DSC_0117.AVI", offset, length);
-            if (rawData == null) {
+            if (rawData.capacity() == 0) {
                 break;
             }
             randomAccessFile.write(rawData.array());
             offset = offset + length;
+            i++;
         }
         randomAccessFile.close();
     }
