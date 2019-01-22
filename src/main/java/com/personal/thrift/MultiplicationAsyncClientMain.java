@@ -1,16 +1,12 @@
 package com.personal.thrift;
 
 import com.google.common.collect.Sets;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.apache.commons.math3.util.Pair;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
 import org.apache.thrift.async.TAsyncClientManager;
-import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TCompactProtocol;
-import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.protocol.TProtocolFactory;
-import org.apache.thrift.transport.*;
+import org.apache.thrift.transport.TNonblockingSocket;
+import org.apache.thrift.transport.TNonblockingTransport;
 
 import java.io.IOException;
 import java.util.Set;

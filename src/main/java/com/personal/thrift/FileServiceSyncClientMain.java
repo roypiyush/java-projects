@@ -1,20 +1,13 @@
 package com.personal.thrift;
 
-import com.google.common.base.Stopwatch;
 import org.apache.commons.io.IOUtils;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
 
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class FileServiceSyncClientMain {
 
@@ -22,12 +15,32 @@ public class FileServiceSyncClientMain {
 
         TTransport transport = new TSocket("localhost", 9090);
         transport.open();
-        FileService.Client client = new FileService.Client(new TBinaryProtocol(transport));
+        com.personal.thrift.FileService.Client client = new com.personal.thrift.FileService.Client(new TBinaryProtocol(transport));
         String filename = args[0];
-        byte[] data = IOUtils.toByteArray(new FileInputStream(new File(String.format("~/%s", filename).replaceAll("^~", System.getProperty("user.home")))));
-        int product = client.sendFile(ByteBuffer.wrap(data), filename);
-        System.out.println("Result " + product);
+//        sendFile(client, filename);
+        downloadFile(client, filename);
         transport.close();
+    }
+
+    private static void downloadFile(com.personal.thrift.FileService.Client client, String filename) throws TException, FileNotFoundException, IOException {
+        int offset = 0;
+        int length = 1024;
+        RandomAccessFile randomAccessFile = new RandomAccessFile(new File("/tmp/downloaded.avi") ,"rw");
+        randomAccessFile.seek(offset);
+        while (true) {
+            ByteBuffer rawData = client.downloadFile("/home/piyush/DSC_0117.AVI", offset, length);
+            if (rawData == null) {
+                break;
+            }
+            randomAccessFile.write(rawData.array());
+            offset = offset + length;
+        }
+        randomAccessFile.close();
+    }
+
+    private static void sendFile(com.personal.thrift.FileService.Client client, String filename) throws IOException, TException {
+        byte[] data = IOUtils.toByteArray(new FileInputStream(new File(String.format("~/%s", filename).replaceAll("^~", System.getProperty("user.home")))));
+        client.sendFile(ByteBuffer.wrap(data), filename);
     }
 
 }

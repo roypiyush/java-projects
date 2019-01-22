@@ -3,9 +3,7 @@ package com.personal.thrift;
 import com.google.common.base.Stopwatch;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TCompactProtocol;
 import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 
@@ -36,9 +34,9 @@ public class MultiplicationSyncClientMain {
                     transport.open();
 
                     TProtocol protocol = new TBinaryProtocol(transport);
-                    MultiplicationService.Client client = new MultiplicationService.Client(protocol);
+                    com.personal.thrift.MultiplicationService.Client client = new com.personal.thrift.MultiplicationService.Client(protocol);
 
-                    int product = client.multiply(id + 1, 5);
+                    String product = client.multiply(id + 1, 5);
                     System.out.println("3*5=" + product);
 
                     transport.close();

@@ -17,8 +17,9 @@ public class MultiplicationClientMain {
             TProtocol protocol = new TBinaryProtocol(transport);
             MultiplicationService.Client client = new MultiplicationService.Client(protocol);
 
-            int product = client.multiply(3, 5);
-            System.out.println("3*5=" + product);
+            int n1 = 3; int n2 = 5;
+            String product = client.multiply(n1, n2);
+            System.out.println(String.format("%s*%s=", n1, n2) + product);
 
             transport.close();
         } catch (TException x) {

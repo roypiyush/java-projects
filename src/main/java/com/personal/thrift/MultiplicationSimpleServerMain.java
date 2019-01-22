@@ -12,14 +12,14 @@ public class MultiplicationSimpleServerMain {
     public static void main(String[] args) {
         try {
             MultiplicationHandler handler = new MultiplicationHandler();
-            MultiplicationService.Processor processor = new MultiplicationService.Processor(handler);
+            com.personal.thrift.MultiplicationService.Processor processor = new com.personal.thrift.MultiplicationService.Processor(handler);
             tServerTransport(processor);
         } catch (Exception x) {
             x.printStackTrace();
         }
     }
 
-    private static void tServerTransport(MultiplicationService.Processor processor) {
+    private static void tServerTransport(com.personal.thrift.MultiplicationService.Processor processor) {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
             TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));

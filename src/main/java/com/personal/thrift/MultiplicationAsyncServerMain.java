@@ -11,14 +11,14 @@ public class MultiplicationAsyncServerMain {
     public static void main(String[] args) {
         try {
             MultiplicationHandler handler = new MultiplicationHandler();
-            MultiplicationService.AsyncProcessor processor = new MultiplicationService.AsyncProcessor<>(handler);
+            com.personal.thrift.MultiplicationService.AsyncProcessor processor = new com.personal.thrift.MultiplicationService.AsyncProcessor<>(handler);
             tNonBlockingServerTransport(processor);
         } catch (Exception x) {
             x.printStackTrace();
         }
     }
 
-    private static void tNonBlockingServerTransport(MultiplicationService.AsyncProcessor processor) {
+    private static void tNonBlockingServerTransport(com.personal.thrift.MultiplicationService.AsyncProcessor processor) {
         try {
             TNonblockingServerTransport tNonblockingServerTransport = new TNonblockingServerSocket(9090);
             TNonblockingServer nonblockingServer = new TNonblockingServer(new TNonblockingServer

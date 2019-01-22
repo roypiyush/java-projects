@@ -274,7 +274,7 @@
                         </goals>
                         <configuration>
                             <sourceDirectory>${project.basedir}/src/main/resources/avsc/</sourceDirectory>
-                            <outputDirectory>${project.build.directory}/generated-sources/</outputDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources/avro</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -285,8 +285,9 @@
 				<version>${thrift-plugin.version}</version>
 				<configuration>
 					<thriftExecutable>${thrift.exe}</thriftExecutable>
-					<thriftSourceRoot>src/main/java/thrift</thriftSourceRoot>
-					<outputDirectory>src/main/java/generated-sources</outputDirectory>
+					<thriftSourceRoot>src/main/resources/thrift</thriftSourceRoot>
+					<outputDirectory>${project.build.directory}/generated-sources/thrift</outputDirectory>
+					<generator>java</generator>
 				</configuration>
 				<executions>
 					<execution>
