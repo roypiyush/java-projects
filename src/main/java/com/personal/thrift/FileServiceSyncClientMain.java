@@ -41,7 +41,7 @@ public class FileServiceSyncClientMain {
     }
 
     private static void sendFile(com.personal.thrift.FileService.Client client, String filename) throws IOException, TException {
-        byte[] data = IOUtils.toByteArray(new FileInputStream(new File(String.format("~/%s", filename).replaceAll("^~", System.getProperty("user.home")))));
+        byte[] data = IOUtils.toByteArray(new FileInputStream(new File(String.format(System.getProperty("user.home") + "/%s", filename))));
         client.sendFile(ByteBuffer.wrap(data), filename);
     }
 
