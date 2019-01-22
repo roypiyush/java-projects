@@ -17,7 +17,7 @@ public class FileServiceSyncClientMain {
         transport.open();
         com.personal.thrift.FileService.Client client = new com.personal.thrift.FileService.Client(new TBinaryProtocol(transport));
         String filename = args[0];
-//        sendFile(client, filename);
+        sendFile(client, filename);
         downloadFile(client, filename);
         transport.close();
     }
@@ -25,11 +25,11 @@ public class FileServiceSyncClientMain {
     private static void downloadFile(com.personal.thrift.FileService.Client client, String filename) throws TException, FileNotFoundException, IOException {
         int offset = 0;
         int length = 1024;
-        RandomAccessFile randomAccessFile = new RandomAccessFile(new File("/tmp/downloaded.avi") ,"rw");
+        RandomAccessFile randomAccessFile = new RandomAccessFile(new File(String.format("/tmp/downloaded_%s", filename)) ,"rw");
         randomAccessFile.seek(offset);
         int i = 0;
         while (true) {
-            ByteBuffer rawData = client.downloadFile("/home/piyush/DSC_0117.AVI", offset, length);
+            ByteBuffer rawData = client.downloadFile(System.getProperty("user.home") + File.separator + filename, offset, length);
             if (rawData.capacity() == 0) {
                 break;
             }
