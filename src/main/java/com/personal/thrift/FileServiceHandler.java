@@ -32,14 +32,7 @@ public class FileServiceHandler implements com.personal.thrift.FileService.Iface
             randomAccessFile.seek(offset);
             int bytesRead = randomAccessFile.read(dataRead);
             randomAccessFile.close();
-            if (bytesRead < length) {
-                byte[] bytes = new byte[bytesRead];
-                for (int i = 0; i < bytesRead; i++) {
-                    bytes[i] = dataRead[i];
-                }
-                return ByteBuffer.wrap(bytes);
-            }
-            return ByteBuffer.wrap(dataRead);
+            return ByteBuffer.wrap(dataRead, 0, bytesRead);
         } catch (Exception e) {
             e.printStackTrace();
         }
