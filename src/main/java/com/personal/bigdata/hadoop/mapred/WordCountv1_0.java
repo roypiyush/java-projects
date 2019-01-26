@@ -1,4 +1,4 @@
-package com.personal.bigdata.hadoop_mapred;
+package com.personal.bigdata.hadoop.mapred;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
