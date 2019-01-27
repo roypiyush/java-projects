@@ -1,6 +1,7 @@
 package com.personal.old.tricks;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.hadoop.fs.Path;
 
 import java.io.*;
 
@@ -16,7 +17,7 @@ public class CreateFile {
     }
 
     public static void main(String[] args) {
-        final File lockFile = new File("/home/piyush/workspace/java-projects/target/newfile");
+        final File lockFile = new File(new Path(args[1]).getParent().toUri().toString() + "/newfile");
         int size = 6;
         Thread[] threads = new Thread[size];
         for (int i = 0; i < size; i++) {
