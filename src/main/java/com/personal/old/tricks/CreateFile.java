@@ -3,12 +3,18 @@ package com.personal.old.tricks;
 import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.fs.Path;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class CreateFile {
 
     private static final void write(String src, String dst) throws IOException {
-        System.out.printf("Written by Thread %s\n", Thread.currentThread().getName());
+        System.out.printf("Written by Thread %s\n",
+                Thread.currentThread().getName());
         InputStream in = new FileInputStream(src);
         OutputStream out = new FileOutputStream(dst);
         IOUtils.copy(in, out, 1024);
@@ -19,7 +25,9 @@ public class CreateFile {
     public static void main(String[] args) {
         String src = args[0];
         String dst = args[1];
-        final File lockFile = new File(new Path(dst).getParent().toUri().toString() + "/newfile");
+        final File lockFile =
+                new File(new Path(dst).getParent().toUri().toString() +
+                        "/newfile");
         int size = 6;
         Thread[] threads = new Thread[size];
         for (int i = 0; i < size; i++) {
