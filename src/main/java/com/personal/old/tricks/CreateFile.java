@@ -17,7 +17,9 @@ public class CreateFile {
     }
 
     public static void main(String[] args) {
-        final File lockFile = new File(new Path(args[1]).getParent().toUri().toString() + "/newfile");
+        String src = args[0];
+        String dst = args[1];
+        final File lockFile = new File(new Path(dst).getParent().toUri().toString() + "/newfile");
         int size = 6;
         Thread[] threads = new Thread[size];
         for (int i = 0; i < size; i++) {
@@ -25,7 +27,7 @@ public class CreateFile {
                 try {
                     boolean created = lockFile.createNewFile();
                     System.out.printf("Thread %s Created %s\n", Thread.currentThread().getName(), created);
-                    if (created) write(args[0], args[1]);
+                    if (created) write(src, dst);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -44,6 +46,6 @@ public class CreateFile {
             }
         }
         lockFile.delete();
-        new File(args[1]).delete();
+        new File(dst).delete();
     }
 }
