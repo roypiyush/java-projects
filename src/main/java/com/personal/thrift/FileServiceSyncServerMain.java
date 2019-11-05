@@ -10,19 +10,19 @@ public class FileServiceSyncServerMain {
     public static void main(String[] args) {
         try {
             FileServiceHandler handler = new FileServiceHandler();
-            com.personal.thrift.FileService.Processor processor = new com.personal.thrift.FileService.Processor(handler);
+            FileService.Processor<FileServiceHandler> processor = new com.personal.thrift.FileService.Processor<>(handler);
             tServerTransport(processor);
         } catch (Exception x) {
             x.printStackTrace();
         }
     }
 
-    private static void tServerTransport(com.personal.thrift.FileService.Processor processor) {
+    private static void tServerTransport(FileService.Processor<FileServiceHandler> processor) {
         try {
             TServerTransport serverTransport = new TServerSocket(9090);
             TServer server = new TSimpleServer(new TServer.Args(serverTransport).processor(processor));
 
-            System.out.println("Starting the tServerTransport server...");
+            System.out.println("Starting the FileServiceSync server...");
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 System.out.println("Stopping Server...");
                 server.stop();
