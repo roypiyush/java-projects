@@ -13,10 +13,8 @@ import java.util.Set;
 
 public class MultiplicationAsyncClientMain {
     public static void main(String[] args) {
-
-
         try {
-            Set isComplete = Sets.newHashSet();
+            Set<Boolean> isComplete = Sets.newHashSet();
             TNonblockingTransport transport = new TNonblockingSocket("127.0.0.1", 9090);
             TAsyncClientManager clientManager = new TAsyncClientManager();
             MultiplicationService.AsyncClient client = new MultiplicationService.AsyncClient(
@@ -25,9 +23,9 @@ public class MultiplicationAsyncClientMain {
                     transport);
 
 
-            client.multiply(3, 5, new AsyncMethodCallback() {
+            client.multiply(3, 5, new AsyncMethodCallback<String>() {
                 @Override
-                public void onComplete(Object response) {
+                public void onComplete(String response) {
                     System.out.println(response);
                     isComplete.add(true);
                 }

@@ -4,8 +4,6 @@ import org.apache.thrift.server.TNonblockingServer;
 import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TNonblockingServerTransport;
 
-
-@SuppressWarnings("unchecked")
 public class MultiplicationAsyncServerMain {
 
     public static void main(String[] args) {
