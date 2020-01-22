@@ -113,6 +113,8 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
         // fire channel read for WebSocketTextFrameHandler.
         String request = ((TextWebSocketFrame) frame).text();
+        // Convert to object
+        request = String.format("{\"key\": \"%s\"}", request);
         ctx.fireChannelRead(new TextWebSocketFrame(request));
     }
 
