@@ -13,7 +13,7 @@ public class ProcessMessageHandler extends SimpleChannelInboundHandler<Message>{
 		msg.setBar("altered bar");
 		Gson gson = new Gson();
 		System.out.println("altered object in json: " + gson.toJson(msg));
-		
+
 		// when finished write out a new Message object (newMsg)
 		Message msg2 = new Message();
 		msg2.setFoo(msg.getFoo());
