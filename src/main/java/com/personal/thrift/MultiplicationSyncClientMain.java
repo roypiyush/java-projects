@@ -27,7 +27,7 @@ public class MultiplicationSyncClientMain {
 
             public void run() {
                 try {
-                    Stopwatch stopwatch = Stopwatch.createStarted();
+                    Stopwatch stopwatch = new Stopwatch();
                     TTransport transport;
 
                     transport = new TSocket("localhost", 9090);
@@ -40,7 +40,7 @@ public class MultiplicationSyncClientMain {
                     System.out.println("3*5=" + product);
 
                     transport.close();
-                    final long elapsed = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+                    final long elapsed = stopwatch.elapsedTime(TimeUnit.MILLISECONDS);
                     System.out.println("Elapsed Time in millis " + elapsed);
                     if (elapsed > 1000) {
                         count.incrementAndGet();

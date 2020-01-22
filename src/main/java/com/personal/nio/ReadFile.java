@@ -50,13 +50,13 @@ public class ReadFile {
     }
 
     private static void asyncFileChannel(String file) throws IOException, InterruptedException, ExecutionException {
-        Stopwatch stopwatch = Stopwatch.createStarted();
+        Stopwatch stopwatch = new Stopwatch();
         Path path = Paths.get(file);
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.READ);
         long position = 0;
         while((position = readUntilComplete(fileChannel, position)) != -1);
         stopwatch.stop();
-        System.out.println("asyncFileChannel() " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        System.out.println("asyncFileChannel() " + stopwatch.elapsedTime(TimeUnit.MILLISECONDS));
     }
 
     private static long readUntilComplete(AsynchronousFileChannel fileChannel, long position) throws InterruptedException, ExecutionException {
@@ -79,7 +79,7 @@ public class ReadFile {
     }
 
     private static void synchronousFileChannel(String file) throws IOException {
-        Stopwatch stopwatch = Stopwatch.createStarted();
+        Stopwatch stopwatch = new Stopwatch();
         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
         FileChannel fileChannel = randomAccessFile.getChannel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(48);
@@ -96,6 +96,6 @@ public class ReadFile {
         }
         randomAccessFile.close(); // Closes file channel as well
         stopwatch.stop();
-        System.out.println("synchronousFileChannel() " + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        System.out.println("synchronousFileChannel() " + stopwatch.elapsedTime(TimeUnit.MILLISECONDS));
     }
 }
