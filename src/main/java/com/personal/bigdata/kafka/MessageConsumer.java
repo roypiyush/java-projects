@@ -36,6 +36,7 @@ public class MessageConsumer {
         consumerRunnable.getKafkaConsumer().wakeup();
         System.out.println("Stopping consumer .....");
         consumerRunnable.join();
+        in.close();
     }
 
     private static class ConsumerThread extends Thread {
