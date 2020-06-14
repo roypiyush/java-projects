@@ -11,7 +11,7 @@
 		<jettyVersion>9.3.7.v20160115</jettyVersion>
 		<slf4jVersion>1.7.7</slf4jVersion>
 		<encoding>utf-8</encoding>
-		<java-version>1.8</java-version>
+		<java-version>11</java-version>
 		<glassfish-jersey>2.5.1</glassfish-jersey>
         <lucene-version>7.1.0</lucene-version>
         <opennlp-version>1.8.2</opennlp-version>
@@ -262,9 +262,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.1</version>
 				<configuration>
-					<fork>true</fork>
 					<source>${java-version}</source>
 					<target>${java-version}</target>
 				</configuration>
@@ -336,18 +335,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<source>${java-version}</source>
-						<target>${java-version}</target>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
 
