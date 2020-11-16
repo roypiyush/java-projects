@@ -8,7 +8,7 @@
 	<description>This is a composite of java applications</description>
 
 	<properties>
-		<jettyVersion>9.3.7.v20160115</jettyVersion>
+		<jettyVersion>9.4.34.v20201102</jettyVersion>
 		<slf4jVersion>1.7.7</slf4jVersion>
 		<encoding>utf-8</encoding>
 		<java-version>11</java-version>
