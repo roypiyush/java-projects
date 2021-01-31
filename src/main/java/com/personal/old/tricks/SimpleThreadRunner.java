@@ -2,7 +2,7 @@ package com.personal.old.tricks;
 
 public class SimpleThreadRunner {
     private static final int THREAD_RUN_MULTIPLIER = 5;
-    private static int THREAD_WAIT_IN_MILLIS = 1000;
+    private static final int THREAD_WAIT_IN_MILLIS = 1000;
 
     public static void main(String[] args) {
         int size = args.length == 0 ? THREAD_RUN_MULTIPLIER : Integer.parseInt(args[0]);
