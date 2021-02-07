@@ -3,7 +3,7 @@ package com.personal.old.designpatterns.vistitor;
 public class CarElementDoVisitor implements IVisitor {
 	
 	public CarElementDoVisitor() {
-		System.out.println("\nCarElementDoVisitor is performing");
+		System.out.println("CarElementDoVisitor is working");
 	}
 	
     public void visit(Wheel wheel) {
