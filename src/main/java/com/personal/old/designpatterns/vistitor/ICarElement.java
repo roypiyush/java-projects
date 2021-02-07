@@ -17,5 +17,5 @@ public interface ICarElement {
 	 * 
 	 * @param visitor
 	 */
-	void accept(Visitor visitor);
+	void accept(IVisitor visitor);
 }

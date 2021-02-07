@@ -18,11 +18,11 @@ public class Car implements ICarElement {
      * 
      * Accepts the visitor and calls it internally
      */
-    public void accept(Visitor visitor) {    
+    public void accept(IVisitor visitor) {
         for(ICarElement elem : elements) {
             elem.accept(visitor);
         }
-        visitor.visit(this);    
+        visitor.visit(this);
     }
 
 }

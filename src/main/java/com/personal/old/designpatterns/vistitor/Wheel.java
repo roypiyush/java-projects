@@ -11,7 +11,7 @@ public class Wheel implements ICarElement {
         return this.name;
     }
  
-    public void accept(Visitor visitor) {
+    public void accept(IVisitor visitor) {
         /*
          * accept(Visitor) in Wheel implements
          * accept(Visitor) in ICarElement, so the call
