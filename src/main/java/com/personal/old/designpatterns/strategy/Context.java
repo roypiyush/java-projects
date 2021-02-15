@@ -7,11 +7,11 @@ public class Context {
         this.strategy = strategy;
     }
 
-    public void executeStrategy() {
+    public void executeStrategy(int a, int b) {
         if (strategy == null) {
             System.out.println("Strategy not specified. Cannot execute!");
             return;
         }
-        strategy.executeStrategy();
+        strategy.executeStrategy(a, b);
     }
 }
