@@ -4,10 +4,10 @@ public class CompositeMain {
 	
 	public static void main(String[] args) {
         //Initialize four ellipses
-        Ellipse ellipse1 = new Ellipse();
-        Ellipse ellipse2 = new Ellipse();
-        Ellipse ellipse3 = new Ellipse();
-        Ellipse ellipse4 = new Ellipse();
+        Ellipse ellipse1 = new Ellipse(1);
+        Ellipse ellipse2 = new Ellipse(2);
+        Ellipse ellipse3 = new Ellipse(3);
+        Ellipse ellipse4 = new Ellipse(4);
  
         //Initialize three composite graphics
         CompositeGraphic graphic = new CompositeGraphic();
