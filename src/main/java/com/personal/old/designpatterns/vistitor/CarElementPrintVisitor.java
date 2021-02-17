@@ -1,5 +1,9 @@
 package com.personal.old.designpatterns.vistitor;
 
+/**
+ * Visitor has all the overloaded methods which will visit objects who has accepts the visitor.
+ * Now in each visit(), visitor can perform actions on/using the object.
+ */
 public class CarElementPrintVisitor implements IVisitor {
 
 	public CarElementPrintVisitor() {
