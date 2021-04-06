@@ -14,7 +14,8 @@ public class UCDemo {
 	 */
 	public static void main(String[] args) throws IOException {
 		int c;
-		URL hp = new URL("https://www.google.com");
+		final String host = args[0];
+		URL hp = new URL("https://" + host);
 		URLConnection hpCon = hp.openConnection();
 		// get date
 		long d = hpCon.getDate();
