@@ -1,7 +1,5 @@
 package com.personal.concurrency.executorframework;
 
-import com.personal.old.ws.jax.server.DataProcessor;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
