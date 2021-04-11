@@ -13,8 +13,8 @@
 		<encoding>utf-8</encoding>
 		<java-version>11</java-version>
 		<glassfish-jersey>2.5.1</glassfish-jersey>
-        <lucene-version>7.1.0</lucene-version>
-        <opennlp-version>1.8.2</opennlp-version>
+	        <lucene-version>7.1.0</lucene-version>
+        	<opennlp-version>1.8.2</opennlp-version>
 		<thrift.exe>thrift</thrift.exe>
 		<thrift.interface>${basedir}/src/main/resources/multiple.thrift</thrift.interface>
 		<gendir.target>${basedir}/target/generated-sources</gendir.target>
@@ -23,7 +23,7 @@
 		<avro.version>1.8.2</avro.version>
 		<arangodb.version>4.2.2</arangodb.version>
 		<hbase.version>2.2.2</hbase.version>
-        <hk2.version>2.5.0-b62</hk2.version>
+	        <hk2.version>2.5.0-b62</hk2.version>
 		<thrift.version>0.14.1</thrift.version>
 		<thrift-plugin.version>0.1.11</thrift-plugin.version>
 		<hadoop.version>3.2.0</hadoop.version>
