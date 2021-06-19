@@ -1,6 +1,8 @@
 package com.personal.nio;
 
 import com.google.common.base.Stopwatch;
+import com.personal.common.CustomTimer;
+import org.glassfish.jersey.internal.inject.Custom;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -36,7 +38,7 @@ public class ReadFile {
             return;
         }
         String file = args[0];
-        runUsingThreads(10, () -> {
+        runUsingThreads(1, () -> {
             try {
                 synchronousFileChannel(file);
             } catch (Exception e) {}
@@ -50,13 +52,12 @@ public class ReadFile {
     }
 
     private static void asyncFileChannel(String file) throws IOException, InterruptedException, ExecutionException {
-        Stopwatch stopwatch = new Stopwatch();
+        CustomTimer timer = CustomTimer.create(true);
         Path path = Paths.get(file);
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.READ);
         long position = 0;
         while((position = readUntilComplete(fileChannel, position)) != -1);
-        stopwatch.stop();
-        System.out.println("asyncFileChannel() " + stopwatch.elapsedTime(TimeUnit.MILLISECONDS));
+        System.out.println("Time taken for asyncFileChannel " + timer.elapsedFormatted());
     }
 
     private static long readUntilComplete(AsynchronousFileChannel fileChannel, long position) throws InterruptedException, ExecutionException {
@@ -71,7 +72,7 @@ public class ReadFile {
         }
         buffer.flip();
         byte[] data = new byte[buffer.limit()];
-        buffer.get(data);
+        ByteBuffer byteBuffer = buffer.get(data);
 //        System.out.print(new String(data));
         position = position + buffer.position();
         buffer.clear();
@@ -79,7 +80,7 @@ public class ReadFile {
     }
 
     private static void synchronousFileChannel(String file) throws IOException {
-        Stopwatch stopwatch = new Stopwatch();
+        CustomTimer timer = CustomTimer.create(true);
         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
         FileChannel fileChannel = randomAccessFile.getChannel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(48);
@@ -95,7 +96,6 @@ public class ReadFile {
             bytesRead = fileChannel.read(byteBuffer);
         }
         randomAccessFile.close(); // Closes file channel as well
-        stopwatch.stop();
-        System.out.println("synchronousFileChannel() " + stopwatch.elapsedTime(TimeUnit.MILLISECONDS));
+        System.out.println("Time taken for SynchronousFileChannel() " + timer.elapsedFormatted());
     }
 }
