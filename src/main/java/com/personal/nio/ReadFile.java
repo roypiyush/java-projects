@@ -1,8 +1,6 @@
 package com.personal.nio;
 
-import com.google.common.base.Stopwatch;
 import com.personal.common.CustomTimer;
-import org.glassfish.jersey.internal.inject.Custom;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -14,7 +12,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Below is blocking operation. FileChannels cannot work with non-blocking mode.
