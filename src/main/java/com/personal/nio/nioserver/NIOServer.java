@@ -4,15 +4,12 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 public class NIOServer {
     static volatile boolean isStop = false;
@@ -24,20 +21,18 @@ public class NIOServer {
                 .setNameFormat("Scheduler-%d")
                 .setDaemon(true)
                 .build());
-        final ExecutorService executorService = Executors.newFixedThreadPool(2, new ThreadFactoryBuilder()
+        final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(0, 2, 15, TimeUnit.SECONDS, new LinkedBlockingQueue<>(), new ThreadFactoryBuilder()
                 .setNameFormat("Worker-%d")
                 .setDaemon(true)
                 .build());
-        final Selector clientSelector = Selector.open();
         final Selector selector = Selector.open();
-        final LinkedBlockingQueue<Socket> queue = new LinkedBlockingQueue<>(10);
 
-        final Scheduler scheduler = new Scheduler(executorService, clientSelector);
+        final Scheduler scheduler = new Scheduler(threadPoolExecutor, isStop);
         schedulerExecutorService.submit(scheduler);
 
         final ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         final ServerSocket socket = serverSocketChannel.socket();
-        socket.bind(new InetSocketAddress(9999));
+        socket.bind(new InetSocketAddress("localhost", 9999));
         serverSocketChannel.configureBlocking(false);
         final SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println(selectionKey);
@@ -65,8 +60,9 @@ public class NIOServer {
                 selectionKeyIterator.remove();
             }
         }
+        scheduler.stop(isStop);
         schedulerExecutorService.shutdown();
-        executorService.shutdown();
+        threadPoolExecutor.shutdown();
         System.out.println("Shutdown complete...");
     }
 }

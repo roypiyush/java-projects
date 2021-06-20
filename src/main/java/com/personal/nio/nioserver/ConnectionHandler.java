@@ -34,8 +34,8 @@ public class ConnectionHandler implements Runnable {
             if (bytesRead == 0) {
                 return;
             }
-            final Thread thread = Thread.currentThread();
-            System.out.println(thread + " " + bytesRead + " bytes read on " + channel.socket().getRemoteSocketAddress());
+            /*final Thread thread = Thread.currentThread();
+            System.out.println(thread + " " + bytesRead + " bytes read on " + channel.socket().getRemoteSocketAddress());*/
 
         }
     }

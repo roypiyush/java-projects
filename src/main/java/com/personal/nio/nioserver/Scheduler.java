@@ -14,10 +14,12 @@ import java.util.concurrent.ExecutorService;
 public class Scheduler implements Runnable {
     final ExecutorService executorService;
     final Selector selector;
+    volatile boolean isStop;
 
-    public Scheduler(final ExecutorService executorService, final Selector selector) {
-        this.selector = selector;
+    public Scheduler(final ExecutorService executorService, boolean isStop) throws IOException {
+        this.selector = Selector.open();
         this.executorService = executorService;
+        this.isStop = isStop;
     }
 
     public void scheduleSocket(final Socket socket) throws IOException {
@@ -27,10 +29,14 @@ public class Scheduler implements Runnable {
         selector.wakeup();
     }
 
+    public void stop(final boolean isStop) {
+        this.isStop = isStop;
+    }
+
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!isStop) {
                 int channelCount = selector.select();
                 if (channelCount == 0) {
                     continue;
