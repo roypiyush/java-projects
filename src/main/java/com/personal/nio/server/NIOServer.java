@@ -1,4 +1,4 @@
-package com.personal.nio.nioserver;
+package com.personal.nio.server;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
@@ -32,7 +32,7 @@ public class NIOServer {
 
         final ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         final ServerSocket socket = serverSocketChannel.socket();
-        socket.bind(new InetSocketAddress("localhost", 9999));
+        socket.bind(new InetSocketAddress("localhost", Integer.parseInt(args[0])));
         serverSocketChannel.configureBlocking(false);
         final SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println(selectionKey);

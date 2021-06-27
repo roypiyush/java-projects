@@ -1,4 +1,4 @@
-package com.personal.nio.nioserver;
+package com.personal.nio.server;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
