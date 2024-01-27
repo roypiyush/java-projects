@@ -15,7 +15,6 @@ public class NIOServer {
     static volatile boolean isStop = false;
 
     public static void main(String[] args) throws Exception {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> isStop = true));
 
         final ExecutorService schedulerExecutorService = Executors.newSingleThreadExecutor(new ThreadFactoryBuilder()
                 .setNameFormat("Scheduler-%d")
@@ -36,6 +35,14 @@ public class NIOServer {
         serverSocketChannel.configureBlocking(false);
         final SelectionKey selectionKey = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         System.out.println(selectionKey);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            isStop = true;
+            scheduler.stop(isStop);
+            schedulerExecutorService.shutdown();
+            threadPoolExecutor.shutdown();
+            System.out.println("Shutdown complete...");
+        }));
 
         while (!isStop) {
             int readyChannels = selector.select(); // block till channel is ready. Use select() for blocking op
@@ -60,9 +67,5 @@ public class NIOServer {
                 selectionKeyIterator.remove();
             }
         }
-        scheduler.stop(isStop);
-        schedulerExecutorService.shutdown();
-        threadPoolExecutor.shutdown();
-        System.out.println("Shutdown complete...");
     }
 }
