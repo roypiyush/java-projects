@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.util.Base64;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
 
 
 /*
@@ -24,18 +25,26 @@ public class WordCountProducer {
     public static final String WORD_COUNT_PRODUCER_TOPIC = "word-count-producer";
 
     public static void main(final String[] args) throws Exception {
+        final CountDownLatch latch = new CountDownLatch(1);
         final Scanner in = new Scanner(System.in);
         final Properties configProperties = getProperties();
-
         final KafkaProducer<String, String> producer = new KafkaProducer<>(configProperties);
-        String line = in.nextLine();
-        while (!line.equals("exit") || !line.equals("quit")) {
-            final ProducerRecord<String, String> rec = new ProducerRecord<>(WORD_COUNT_PRODUCER_TOPIC, line);
-            producer.send(rec);
-            line = in.nextLine();
-        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            producer.close();
+            latch.countDown();
+        }));
+        final Thread thread = new Thread(() -> {
+            while (true) {
+                String line = in.nextLine();
+                final ProducerRecord<String, String> rec = new ProducerRecord<>(WORD_COUNT_PRODUCER_TOPIC, line);
+                producer.send(rec);
+            }
+        });
+
+        thread.start();
+        latch.await();
         in.close();
-        producer.close();
     }
 
     private static Properties getProperties() {
