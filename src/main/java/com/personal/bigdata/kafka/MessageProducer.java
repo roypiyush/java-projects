@@ -30,28 +30,22 @@ public class MessageProducer {
 
     public static final String TOPIC_NAME = "kafkatopic";
 
-    public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter message(type exit to quit)");
-
+    public static void main(final String[] args) throws Exception {
+        final Scanner in = new Scanner(System.in);
         final Properties configProperties = getProperties();
 
-        KafkaProducer<String, String> producer = new KafkaProducer<>(configProperties);
+        final KafkaProducer<String, String> producer = new KafkaProducer<>(configProperties);
         String line = in.nextLine();
         while (!line.equals("exit") || !line.equals("quit")) {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
-            DatumWriter<User> writer = new SpecificDatumWriter<>(User.getClassSchema());
-            User user = User.newBuilder()
-                    .setName(line)
-                    .setFavoriteColor("blue")
-                    .setFavoriteNumber(12)
-                    .build();
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            final BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(out, null);
+            final DatumWriter<User> writer = new SpecificDatumWriter<>(User.getClassSchema());
+            final User user = User.newBuilder().setName(line).setFavoriteColor("blue").setFavoriteNumber(12).build();
             writer.write(user, encoder);
             encoder.flush();
             out.close();
-            byte[] serializedBytes = out.toByteArray();
-            ProducerRecord<String, String> rec = new ProducerRecord<>(TOPIC_NAME, Base64.getEncoder().encodeToString(serializedBytes));
+            final byte[] serializedBytes = out.toByteArray();
+            final ProducerRecord<String, String> rec = new ProducerRecord<>(TOPIC_NAME, Base64.getEncoder().encodeToString(serializedBytes));
             producer.send(rec);
             line = in.nextLine();
         }
@@ -60,7 +54,7 @@ public class MessageProducer {
     }
 
     private static Properties getProperties() {
-        Properties configProperties = new Properties();
+        final Properties configProperties = new Properties();
         configProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 "org.apache.kafka.common.serialization.StringSerializer");

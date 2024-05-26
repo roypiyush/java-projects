@@ -14,23 +14,29 @@ import java.util.concurrent.ExecutionException;
 
 public class TopicOperations {
     public static void main(String[] args) {
-        final String ordersTopic = "kafkatopic";
+        final String topicToCreate = "kafkatopic";
         Properties props = new Properties();
 
         props.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 
         try (final AdminClient adminClient = AdminClient.create(props)) {
             try {
+
+                final Set<String> topicNames = adminClient.listTopics().names().get();
+                if (topicNames.contains(topicToCreate)) {
+                    System.out.println(topicToCreate + " Topic Already Exists ");
+                    System.out.println(topicNames);
+                    return;
+                }
+
                 // Define topic
-                NewTopic newTopic = new NewTopic(ordersTopic, 1, (short) 1);
+                NewTopic newTopic = new NewTopic(topicToCreate, 1, (short) 1);
 
                 // Create topic, which is async call.
                 final CreateTopicsResult createTopicsResult = adminClient.createTopics(Collections.singleton(newTopic));
 
                 // Since the call is Async, Lets wait for it to complete.
-                createTopicsResult.values().get(ordersTopic).get();
-                final KafkaFuture<Set<String>> names = adminClient.listTopics().names();
-                System.out.println(names.get());
+                createTopicsResult.values().get(topicToCreate).get();
             } catch (InterruptedException | ExecutionException e) {
                 if (!(e.getCause() instanceof TopicExistsException))
                     throw new RuntimeException(e.getMessage(), e);
