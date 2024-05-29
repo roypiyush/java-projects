@@ -38,10 +38,19 @@ public class ReadOrWriteData {
     private static final String STREET_COL = "street";
     private static final String COUNTRY_COL = "country";
 
+    private static final String INCOME_CF = "Income";
+    private static final String SOURCE_COL = "source";
+    private static final String SALARY_COL = "salary";
+
     private static final String rowKeyFormat = "uid%015d";
 
     private static final Random RANDOM = new Random();
 
+    enum SOURCE {
+        SALARY,
+        FIXED_DEPOSIT,
+        OTHER_SOURCES
+    }
     public static void main(final String[] args) throws Exception {
         if (args.length != 1) {
             System.out.println("Please provide valid hbase-site.xml path");
@@ -54,12 +63,8 @@ public class ReadOrWriteData {
         final Table table = connection.getTable(tableName);
 
         final long startTime = System.currentTimeMillis();
-//        for (long id = 0; id < 1000000; id++) {
+//        for (long id = 0; id < 3000000; id++) {
 //            putData(table, row(id), getFName(), getLName(), getStreet(), getCountry());
-//        }
-
-//        for (long id = 0; id < 1000000; id++) {
-//            readColumns(table, id);
 //        }
 
         scanTable(table);
@@ -70,9 +75,11 @@ public class ReadOrWriteData {
 
     private static TableDescriptorBuilder prepareTableDescription(final TableName tableName) {
         final TableDescriptorBuilder desc = TableDescriptorBuilder.newBuilder(tableName);
+        desc.setCompactionEnabled(true);
         desc.setColumnFamilies(Arrays.asList(
                 ColumnFamilyDescriptorBuilder.newBuilder(NAME_CF.getBytes()).build(),
-                ColumnFamilyDescriptorBuilder.newBuilder(ADDRESS_CF.getBytes()).build()));
+                ColumnFamilyDescriptorBuilder.newBuilder(ADDRESS_CF.getBytes()).build(),
+                ColumnFamilyDescriptorBuilder.newBuilder(INCOME_CF.getBytes()).build()));
         return desc;
     }
 
@@ -143,32 +150,30 @@ public class ReadOrWriteData {
 
     private static void scanTable(final Table table) throws IOException {
         final Scan scan = new Scan();
-        scan.addColumn(NAME_CF.getBytes(), FNAME_COL.getBytes());
-        scan.addColumn(NAME_CF.getBytes(), LNAME_COL.getBytes());
-        scan.addColumn(ADDRESS_CF.getBytes(), STREET_COL.getBytes());
-        scan.addColumn(ADDRESS_CF.getBytes(), COUNTRY_COL.getBytes());
+        scan.addColumn(INCOME_CF.getBytes(), SALARY_COL.getBytes());
         final SingleColumnValueFilter singleColumnValueFilter = new SingleColumnValueFilter(
-                NAME_CF.getBytes(),
-                FNAME_COL.getBytes(),
-                CompareOperator.EQUAL,
-                "John 0.3542212612072729".getBytes()
+                INCOME_CF.getBytes(),
+                SALARY_COL.getBytes(),
+                CompareOperator.GREATER_OR_EQUAL,
+                Bytes.toBytes(0)
         );
         scan.setFilter(singleColumnValueFilter);
         final ResultScanner scanner = table.getScanner(scan);
         final Iterator<Result> iterator = scanner.iterator();
+        int count = 0;
         while (iterator.hasNext()) {
             final Result next = iterator.next();
-            System.out.println("Got result");
+            count++;
             while (next.advance()) {
                 final Cell current = next.current();
                 getFamilyName(current);
                 final String rowKey = getRowName(current);
                 getQualifierName(current);
                 final String value = getValue(current);
-                System.out.printf("Got value key=%s value=%s\n", rowKey, value);
+                //System.out.printf("Got value key=%s value=%s\n", rowKey, value);
             }
         }
-
+        System.out.printf("Records read %s \n", count);
     }
 
     private static void deleteRow(final String rowKey, final Table table, final HBaseAdmin admin, final TableName tableName) throws IOException {
@@ -190,6 +195,9 @@ public class ReadOrWriteData {
         put.addColumn(NAME_CF.getBytes(), LNAME_COL.getBytes(), Bytes.toBytes(lname));
         put.addColumn(ADDRESS_CF.getBytes(), STREET_COL.getBytes(), Bytes.toBytes(street));
         put.addColumn(ADDRESS_CF.getBytes(), COUNTRY_COL.getBytes(), Bytes.toBytes(country));
+        final SOURCE value = SOURCE.values()[RANDOM.nextInt(SOURCE.values().length)];
+        put.addColumn(INCOME_CF.getBytes(), SOURCE_COL.getBytes(), Bytes.toBytes(value.name()));
+        put.addColumn(INCOME_CF.getBytes(), SALARY_COL.getBytes(), Bytes.toBytes(RANDOM.nextLong()));
         table.put(put);
     }
 
