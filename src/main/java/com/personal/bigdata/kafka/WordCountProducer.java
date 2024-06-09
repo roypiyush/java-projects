@@ -4,7 +4,6 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.util.Base64;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
@@ -27,7 +26,7 @@ public class WordCountProducer {
     public static void main(final String[] args) throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
         final Scanner in = new Scanner(System.in);
-        final Properties configProperties = getProperties();
+        final Properties configProperties = getProperties(args[0]);
         final KafkaProducer<String, String> producer = new KafkaProducer<>(configProperties);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -47,9 +46,9 @@ public class WordCountProducer {
         in.close();
     }
 
-    private static Properties getProperties() {
+    private static Properties getProperties(String bootstrapServers) {
         final Properties configProperties = new Properties();
-        configProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         configProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         return configProperties;

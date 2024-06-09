@@ -16,35 +16,36 @@ import java.util.concurrent.CountDownLatch;
 public class KStreamWordCountProcessor {
     public static void main(String[] args) {
 
-        final Properties props = getProperties();
+        final Properties props = getProperties(args[0]);
 
         final StreamsBuilder builder = createWordCountStream();
-        final KafkaStreams streams = new KafkaStreams(builder.build(), props);
-        final CountDownLatch latch = new CountDownLatch(1);
+        try (KafkaStreams streams = new KafkaStreams(builder.build(), props)) {
+            final CountDownLatch latch = new CountDownLatch(1);
 
-        // attach shutdown handler to catch control-c
-        Runtime.getRuntime().addShutdownHook(new Thread("streams-wordcount-shutdown-hook") {
-            @Override
-            public void run() {
-                streams.close();
-                latch.countDown();
+            // attach shutdown handler to catch control-c
+            Runtime.getRuntime().addShutdownHook(new Thread("streams-wordcount-shutdown-hook") {
+                @Override
+                public void run() {
+                    streams.close();
+                    latch.countDown();
+                }
+            });
+
+            try {
+                streams.start();
+                latch.await();
+            } catch (final Throwable e) {
+                System.exit(1);
             }
-        });
-
-        try {
-            streams.start();
-            latch.await();
-        } catch (final Throwable e) {
-            System.exit(1);
         }
         System.out.println("Stopped!!");
         System.exit(0);
     }
 
-    private static Properties getProperties() {
+    private static Properties getProperties(String bootstrapServers) {
         final Properties configProperties = new Properties();
         configProperties.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-wordcount");
-        configProperties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProperties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProperties.put(StreamsConfig.STATESTORE_CACHE_MAX_BYTES_CONFIG, 0);
         configProperties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class);
         configProperties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.StringSerde.class);

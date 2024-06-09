@@ -11,6 +11,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Properties;
@@ -57,7 +58,7 @@ public class MessageConsumer {
             try {
                 while (true) {
                     final DatumReader<User> datumReader = new SpecificDatumReader<>(User.class);
-                    final ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
+                    final ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofMillis(100));
                     for (final ConsumerRecord<String, String> record : records) {
                         final String value = record.value();
                         System.out.println("----------- OUTPUT ------------ " + value);

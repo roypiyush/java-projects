@@ -14,10 +14,10 @@ public class WordCountConsumer {
 
     public static final String WORD_COUNT_CONSUMER_TOPIC = "word-count-consumer";
 
-    public static void main(final String[] argv) throws Exception {
+    public static void main(final String[] args) throws Exception {
 
         final CountDownLatch latch = new CountDownLatch(1);
-        final ConsumerThread consumerRunnable = new ConsumerThread();
+        final ConsumerThread consumerRunnable = new ConsumerThread(args[0]);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Stopping...");
@@ -38,14 +38,17 @@ public class WordCountConsumer {
 
     private static class ConsumerThread extends Thread {
 
+        private final String bootstrapServers;
+
         private KafkaConsumer<String, Long> kafkaConsumer;
 
-        public ConsumerThread() {
+        public ConsumerThread(final String bootstrapServers) {
+            this.bootstrapServers = bootstrapServers;
         }
 
         public void run() {
 
-            final Properties configProperties = getProperties("1");
+            final Properties configProperties = getProperties("1", bootstrapServers);
             this.kafkaConsumer = new KafkaConsumer<>(configProperties);
             kafkaConsumer.subscribe(Collections.singletonList(WORD_COUNT_CONSUMER_TOPIC));
 
@@ -71,9 +74,9 @@ public class WordCountConsumer {
         }
     }
 
-    private static Properties getProperties(final String groupId) {
+    private static Properties getProperties(final String groupId, final String bootstrapServers) {
         final Properties configProperties = new Properties();
-        configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.LongDeserializer");
         configProperties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
