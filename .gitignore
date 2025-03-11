@@ -7,3 +7,4 @@ java-projects.iml
 src/main/main.iml
 .factorypath
 .vscode
+.vim

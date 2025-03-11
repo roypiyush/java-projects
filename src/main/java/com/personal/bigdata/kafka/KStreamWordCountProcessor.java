@@ -23,7 +23,7 @@ public class KStreamWordCountProcessor {
             final CountDownLatch latch = new CountDownLatch(1);
 
             // attach shutdown handler to catch control-c
-            Runtime.getRuntime().addShutdownHook(new Thread("streams-wordcount-shutdown-hook") {
+            Runtime.getRuntime().addShutdownHook(new Thread("streams-word-count-shutdown-hook") {
                 @Override
                 public void run() {
                     streams.close();
@@ -44,7 +44,7 @@ public class KStreamWordCountProcessor {
 
     private static Properties getProperties(String bootstrapServers) {
         final Properties configProperties = new Properties();
-        configProperties.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-wordcount");
+        configProperties.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-word-count");
         configProperties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProperties.put(StreamsConfig.STATESTORE_CACHE_MAX_BYTES_CONFIG, 0);
         configProperties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class);
@@ -59,12 +59,8 @@ public class KStreamWordCountProcessor {
                 .stream(WordCountProducer.WORD_COUNT_PRODUCER_TOPIC);
 
         final KTable<String, Long> counts = source
-                .flatMapValues(value -> {
-                    return Arrays.asList(value.split("\\s+"));
-                })
-                .groupBy((key, value) -> {
-                    return value;
-                })
+                .flatMapValues(value -> Arrays.asList(value.split("\\s+")))
+                .groupBy((key, value) -> value)
                 .count();
 
         // need to override value serde to Long type

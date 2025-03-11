@@ -16,9 +16,12 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.NIOFSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Path;
 
 public class LuceneMain {
     public static void main(String[] args) throws IOException, ParseException {
@@ -28,7 +31,6 @@ public class LuceneMain {
 
         // 1. create the index
         Directory index = new RAMDirectory();
-
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
         IndexWriter w = new IndexWriter(index, config);
@@ -39,7 +41,7 @@ public class LuceneMain {
         w.close();
 
         // 2. query
-        String querystr = args.length > 0 ? args[0] : "lucene";
+        String querystr = args.length > 0 ? args[0] : "Luc*";
 
         // the "title" arg specifies the default field to use
         // when no field is explicitly specified in the query.
@@ -52,32 +54,13 @@ public class LuceneMain {
         TopDocs docs = searcher.search(q, hitsPerPage);
         ScoreDoc[] hits = docs.scoreDocs;
 
-        // 4. display results
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         System.out.println("Found " + hits.length + " hits.");
-        for(int i=0;i<hits.length;++i) {
+        for (int i = 0; i < hits.length; ++i) {
             int docId = hits[i].doc;
             Document d = searcher.doc(docId);
-            System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title"));
+            System.out.printf("%d. isbn = %s\t\t\ttitle = %s\n", (i + 1), d.get("isbn"), d.get("title"));
         }
 
-        // reader can only be closed when there
-        // is no need to access the documents any more.
         reader.close();
     }
 
