@@ -22,10 +22,22 @@ public class EchoServer {
     public static final int PORT = 7777;
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        // Create TCP transport
+        final TCPNIOTransport transport =
+                TCPNIOTransportBuilder.newInstance().build();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                transport.shutdownNow();
+            } catch (IOException e) {
+                System.out.println("Couldn't shutdown gracefully");
+                throw new RuntimeException(e);
+            }
+            System.out.println("Stopped Server...");
+        }));
+
         // Create a FilterChain using FilterChainBuilder
         FilterChainBuilder filterChainBuilder = FilterChainBuilder.stateless();
-
-        // Add TransportFilter, which is responsible
         // for reading and writing data to the connection
         filterChainBuilder.add(new TransportFilter());
 
@@ -35,25 +47,12 @@ public class EchoServer {
         // EchoFilter is responsible for echoing received messages
         filterChainBuilder.add(new EchoFilter());
 
-        // Create TCP transport
-        final TCPNIOTransport transport =
-                TCPNIOTransportBuilder.newInstance().build();
-
         transport.setProcessor(filterChainBuilder.build());
-        try {
-            // binding transport to start listen on certain host and port
-            transport.bind(HOST, PORT);
-
-            // start the transport
-            transport.start();
-
-            Thread.currentThread().join();
-        } finally {
-        	System.out.println("Stopping transport...");
-            // stop the transport
-            transport.shutdownNow();
-
-            System.out.println("Stopped transport...");
-        }
+        // binding transport to start listen on certain host and port
+        transport.bind(HOST, PORT);
+        // start the transport
+        transport.start();
+        System.out.printf("Listening on %s:%s\n", HOST, PORT);
+        Thread.currentThread().join();
     }
 }
