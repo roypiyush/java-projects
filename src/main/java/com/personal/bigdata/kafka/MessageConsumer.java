@@ -9,7 +9,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.errors.WakeupException;
 
 import java.time.Duration;
 import java.util.Base64;
@@ -18,7 +17,6 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 public class MessageConsumer {
-
 
     public static void main(final String[] argv) throws Exception {
 
@@ -62,7 +60,8 @@ public class MessageConsumer {
                     for (final ConsumerRecord<String, String> record : records) {
                         final String value = record.value();
                         System.out.println("----------- OUTPUT ------------ " + value);
-                        final Decoder decoder = DecoderFactory.get().binaryDecoder(Base64.getDecoder().decode(value), null);
+                        final Decoder decoder = DecoderFactory.get().binaryDecoder(Base64.getDecoder().decode(value),
+                                null);
                         final User user = datumReader.read(null, decoder);
                         System.out.println("Received User object : " + user.toString());
 
@@ -84,8 +83,10 @@ public class MessageConsumer {
     private static Properties getProperties(final String groupId) {
         final Properties configProperties = new Properties();
         configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        configProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+        configProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                "org.apache.kafka.common.serialization.StringDeserializer");
+        configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                "org.apache.kafka.common.serialization.StringDeserializer");
         configProperties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         configProperties.put(ConsumerConfig.CLIENT_ID_CONFIG, "simple");
         return configProperties;

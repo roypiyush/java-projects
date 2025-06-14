@@ -9,18 +9,14 @@ class Task extends TimerTask {
 	public void run() {
 		System.out.println("Hey, I am executing in timer task.");
 	}
-	
+
 }
 
 public class TimerMain {
 
-	
 	public static void main(String[] args) {
-		
 		// Creating timer thread
 		Timer timer = new Timer();
 		timer.schedule(new Task(), 1000);
-		
-		
 	}
 }
