@@ -6,7 +6,8 @@ public class CustomTimer {
     private long start;
     private long end;
 
-    private CustomTimer() {}
+    private CustomTimer() {
+    }
 
     public static CustomTimer create() {
         return new CustomTimer();
@@ -45,5 +46,9 @@ public class CustomTimer {
 
     public String elaped(String format) {
         return String.format(format, this.end - this.start);
+    }
+
+    public boolean isEnded() {
+        return isEnded;
     }
 }

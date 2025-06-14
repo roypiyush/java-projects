@@ -1,31 +1,7 @@
 package com.personal.security;
 
 import org.apache.commons.codec.binary.Base64;
-import org.bouncycastle.bcpg.ArmoredOutputStream;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.openpgp.PGPLiteralData;
-import org.bouncycastle.openpgp.PGPLiteralDataGenerator;
-import org.bouncycastle.openpgp.PGPObjectFactory;
-import org.bouncycastle.openpgp.PGPPrivateKey;
-import org.bouncycastle.openpgp.PGPPublicKey;
-import org.bouncycastle.openpgp.PGPPublicKeyRingCollection;
-import org.bouncycastle.openpgp.PGPSecretKey;
-import org.bouncycastle.openpgp.PGPSecretKeyRing;
-import org.bouncycastle.openpgp.PGPSecretKeyRingCollection;
-import org.bouncycastle.openpgp.PGPSignature;
-import org.bouncycastle.openpgp.PGPSignatureGenerator;
-import org.bouncycastle.openpgp.PGPUtil;
-import org.bouncycastle.openpgp.operator.jcajce.JcaKeyFingerprintCalculator;
-import org.bouncycastle.openpgp.operator.jcajce.JcaPGPContentSignerBuilder;
-import org.bouncycastle.openpgp.operator.jcajce.JcaPGPContentVerifierBuilderProvider;
-import org.bouncycastle.openpgp.operator.jcajce.JcePBESecretKeyDecryptorBuilder;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
@@ -38,7 +14,6 @@ import java.security.SecureRandom;
 import java.security.Security;
 import java.security.Signature;
 import java.security.SignatureException;
-import java.util.Iterator;
 
 public class SecurityMain {
     public static void main(String[] args) throws Exception {
@@ -60,7 +35,8 @@ public class SecurityMain {
         final SecureRandom nativePRNG = SecureRandom.getInstance("NativePRNG");
         System.out.println("Secure Random Algo = " + nativePRNG.getAlgorithm());
 
-        System.out.println("Digest " + Base64.encodeBase64String(MessageDigest.getInstance("SHA3-512").digest("MyInput".getBytes(StandardCharsets.UTF_8))));
+        System.out.println("Digest " + Base64.encodeBase64String(
+                MessageDigest.getInstance("SHA3-512").digest("MyInput".getBytes(StandardCharsets.UTF_8))));
 
         Signature.getInstance("SHA256withDSA");
 
@@ -74,14 +50,14 @@ public class SecurityMain {
     }
 
     public static KeyPair generateKeyPair(final SecureRandom secureRandom,
-                                          final int keysize) throws NoSuchAlgorithmException {
+            final int keysize) throws NoSuchAlgorithmException {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(keysize, secureRandom);
         return keyPairGenerator.generateKeyPair();
     }
 
-    public static String signMessage(String message, PrivateKey privateKey) throws
-            NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+    public static String signMessage(String message, PrivateKey privateKey)
+            throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initSign(privateKey);
         signature.update(message.getBytes());
@@ -89,7 +65,8 @@ public class SecurityMain {
         return Base64.encodeBase64String(signatureBytes);
     }
 
-    public static boolean verifySignature(String message, String signatureString, PublicKey publicKey) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+    public static boolean verifySignature(String message, String signatureString, PublicKey publicKey)
+            throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature signature = Signature.getInstance("SHA256withRSA");
         signature.initVerify(publicKey);
         signature.update(message.getBytes());

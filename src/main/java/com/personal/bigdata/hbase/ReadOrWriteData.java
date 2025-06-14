@@ -30,6 +30,7 @@ import java.util.Random;
  * Need to have HBase Installed. Path argument expects
  * $HBASE_HOME/conf/hbase-site.xml
  */
+@SuppressWarnings({ "unused" })
 public class ReadOrWriteData {
     private static final String NAME_CF = "Name";
     private static final String FNAME_COL = "firstName";

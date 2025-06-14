@@ -10,11 +10,9 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.Base64;
 import java.util.Properties;
 import java.util.Scanner;
-
 
 /*
  * /opt/kafka_2.11-0.10.2.0/bin/kafka-server-start.sh /opt/kafka_2.11-0.10.2.0/config/server.properties
@@ -45,7 +43,8 @@ public class MessageProducer {
             encoder.flush();
             out.close();
             final byte[] serializedBytes = out.toByteArray();
-            final ProducerRecord<String, String> rec = new ProducerRecord<>(TOPIC_NAME, Base64.getEncoder().encodeToString(serializedBytes));
+            final ProducerRecord<String, String> rec = new ProducerRecord<>(TOPIC_NAME,
+                    Base64.getEncoder().encodeToString(serializedBytes));
             producer.send(rec);
             line = in.nextLine();
         }

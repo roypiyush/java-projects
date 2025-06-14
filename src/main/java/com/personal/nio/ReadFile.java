@@ -18,13 +18,12 @@ import java.util.concurrent.Future;
  */
 public class ReadFile {
 
-
     public static void runUsingThreads(int size, Runnable runnable) {
         Thread[] threads = new Thread[size];
         for (int i = 0; i < size; i++) {
             threads[i] = new Thread(runnable);
         }
-        for (Thread t: threads) {
+        for (Thread t : threads) {
             t.start();
         }
     }
@@ -38,13 +37,15 @@ public class ReadFile {
         runUsingThreads(1, () -> {
             try {
                 synchronousFileChannel(file);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         });
 
         runUsingThreads(1, () -> {
             try {
                 asyncFileChannel(file);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         });
     }
 
@@ -53,15 +54,17 @@ public class ReadFile {
         Path path = Paths.get(file);
         AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, StandardOpenOption.READ);
         long position = 0;
-        while((position = readUntilComplete(fileChannel, position)) != -1);
+        while ((position = readUntilComplete(fileChannel, position)) != -1)
+            ;
         System.out.println("Time taken for asyncFileChannel " + timer.elapsedFormatted());
     }
 
-    private static long readUntilComplete(AsynchronousFileChannel fileChannel, long position) throws InterruptedException, ExecutionException {
+    private static long readUntilComplete(AsynchronousFileChannel fileChannel, long position)
+            throws InterruptedException, ExecutionException {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         Future<Integer> operation = fileChannel.read(buffer, position);
 
-        while(!operation.isDone()) {
+        while (!operation.isDone()) {
             // looping until is done. similar to future.get()
         }
         if (operation.get() == -1) {
@@ -70,7 +73,8 @@ public class ReadFile {
         buffer.flip();
         byte[] data = new byte[buffer.limit()];
         ByteBuffer byteBuffer = buffer.get(data);
-//        System.out.print(new String(data));
+        System.out.println("Reading buffer of size: " + byteBuffer.remaining());
+        System.out.print(new String(data));
         position = position + buffer.position();
         buffer.clear();
         return position;
@@ -84,10 +88,10 @@ public class ReadFile {
 
         int bytesRead = fileChannel.read(byteBuffer);
         while (bytesRead != -1) {
-            byteBuffer.flip();  // make buffer ready for read
-            while(byteBuffer.hasRemaining()){
+            byteBuffer.flip(); // make buffer ready for read
+            while (byteBuffer.hasRemaining()) {
                 byteBuffer.get();
-//                System.out.print((char) byteBuffer.get()); // read 1 byte at a time
+                // System.out.print((char) byteBuffer.get()); // read 1 byte at a time
             }
             byteBuffer.clear(); // make buffer ready for writing
             bytesRead = fileChannel.read(byteBuffer);

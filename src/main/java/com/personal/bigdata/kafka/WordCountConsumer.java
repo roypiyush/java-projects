@@ -5,12 +5,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 public class WordCountConsumer {
-
 
     public static final String WORD_COUNT_CONSUMER_TOPIC = "word-count-consumer";
 
@@ -54,7 +54,7 @@ public class WordCountConsumer {
 
             try {
                 while (true) {
-                    final ConsumerRecords<String, Long> records = kafkaConsumer.poll(100);
+                    final ConsumerRecords<String, Long> records = kafkaConsumer.poll(Duration.ofMillis(100));
                     for (final ConsumerRecord<String, Long> record : records) {
                         final String key = record.key();
                         final Long value = record.value();
@@ -77,8 +77,10 @@ public class WordCountConsumer {
     private static Properties getProperties(final String groupId, final String bootstrapServers) {
         final Properties configProperties = new Properties();
         configProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.LongDeserializer");
+        configProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+                "org.apache.kafka.common.serialization.StringDeserializer");
+        configProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+                "org.apache.kafka.common.serialization.LongDeserializer");
         configProperties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         configProperties.put(ConsumerConfig.CLIENT_ID_CONFIG, "simple");
         return configProperties;

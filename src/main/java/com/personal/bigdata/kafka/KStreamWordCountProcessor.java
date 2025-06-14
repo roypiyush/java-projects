@@ -60,11 +60,15 @@ public class KStreamWordCountProcessor {
 
         final KTable<String, Long> counts = source
                 .flatMapValues(value -> Arrays.asList(value.split("\\s+")))
-                .groupBy((key, value) -> value)
+                .groupBy((key, value) -> {
+                    System.out.println("groupBy value of key = " + key);
+                    return value;
+                })
                 .count();
 
         // need to override value serde to Long type
-        counts.toStream().to(WordCountConsumer.WORD_COUNT_CONSUMER_TOPIC, Produced.with(Serdes.String(), Serdes.Long()));
+        counts.toStream().to(WordCountConsumer.WORD_COUNT_CONSUMER_TOPIC,
+                Produced.with(Serdes.String(), Serdes.Long()));
         return builder;
     }
 }

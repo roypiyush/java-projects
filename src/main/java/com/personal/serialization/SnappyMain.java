@@ -15,6 +15,7 @@ public class SnappyMain {
         System.out.println(String.format("Compressed  [ %s ] ", Base64.encodeBase64URLSafeString(compressed)));
         byte[] uncompressed = Snappy.uncompress(compressed);
         String result = new String(uncompressed, StandardCharsets.UTF_8);
+        System.out.println(result);
 
     }
 }

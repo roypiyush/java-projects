@@ -51,7 +51,7 @@ public class RunTest {
 				if (test.enabled()) {
 
 					try {
-						method.invoke(obj.newInstance());
+						method.invoke(obj.getDeclaredConstructor().newInstance());
 						System.out.printf("%s - Test '%s' - passed %n",
 								++count, method.getName());
 						passed++;

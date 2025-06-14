@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+@SuppressWarnings({ "unused" })
 public class JavaOSProcess {
 
     public static final String SSH_CMD = "/usr/bin/ssh";
     public static final String VERBOSE = "-vvv";
     public static final String HOST_CHECK = "-oStrictHostKeyChecking=no";
 
-    public static void main(String[] args) throws IOException, InterruptedException     {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         final String USER_HOST = String.format("%s@%s", args[1], args[0]);
         final ProcessBuilder processBuilder = new ProcessBuilder(SSH_CMD, VERBOSE, HOST_CHECK, USER_HOST)
