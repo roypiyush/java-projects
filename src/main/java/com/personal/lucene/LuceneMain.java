@@ -16,17 +16,14 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.NIOFSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Path;
 
 public class LuceneMain {
     public static void main(String[] args) throws IOException, ParseException {
         // 0. Specify the analyzer for tokenizing text.
-        //    The same analyzer should be used for indexing and searching
+        // The same analyzer should be used for indexing and searching
         StandardAnalyzer analyzer = new StandardAnalyzer();
 
         // 1. create the index

@@ -32,7 +32,6 @@ public class AvroMain {
         genericRecord2.put("favorite_number", 7);
         genericRecord2.put("favorite_color", "red");
 
-
         LOGGER.info("************Serialization**************");
         User user1 = new User();
         user1.setName("Alyssa");
@@ -62,5 +61,6 @@ public class AvroMain {
             user = dataFileReader.next(user);
             LOGGER.info("User Object: {}", user);
         }
+        dataFileReader.close();
     }
 }

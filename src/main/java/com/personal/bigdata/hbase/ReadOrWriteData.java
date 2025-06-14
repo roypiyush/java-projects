@@ -27,7 +27,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
- * Need to have HBase Installed. Path argument expects $HBASE_HOME/conf/hbase-site.xml
+ * Need to have HBase Installed. Path argument expects
+ * $HBASE_HOME/conf/hbase-site.xml
  */
 public class ReadOrWriteData {
     private static final String NAME_CF = "Name";
@@ -51,6 +52,7 @@ public class ReadOrWriteData {
         FIXED_DEPOSIT,
         OTHER_SOURCES
     }
+
     public static void main(final String[] args) throws Exception {
         if (args.length != 1) {
             System.out.println("Please provide valid hbase-site.xml path");
@@ -63,9 +65,9 @@ public class ReadOrWriteData {
         final Table table = connection.getTable(tableName);
 
         final long startTime = System.currentTimeMillis();
-//        for (long id = 0; id < 3000000; id++) {
-//            putData(table, row(id), getFName(), getLName(), getStreet(), getCountry());
-//        }
+        // for (long id = 0; id < 3000000; id++) {
+        // putData(table, row(id), getFName(), getLName(), getStreet(), getCountry());
+        // }
 
         scanTable(table);
 
@@ -84,7 +86,7 @@ public class ReadOrWriteData {
     }
 
     private static TableName createTableIfNotExists(final HBaseAdmin admin,
-                                                    final String tableName)
+            final String tableName)
             throws IOException {
 
         final TableName tableObject = TableName.valueOf(tableName);
@@ -118,8 +120,7 @@ public class ReadOrWriteData {
                     new String(familyName),
                     new String(qualifierName),
                     new String(value),
-                    timestamp
-            );
+                    timestamp);
         }
     }
 
@@ -155,8 +156,7 @@ public class ReadOrWriteData {
                 INCOME_CF.getBytes(),
                 SALARY_COL.getBytes(),
                 CompareOperator.GREATER_OR_EQUAL,
-                Bytes.toBytes(0)
-        );
+                Bytes.toBytes(0));
         scan.setFilter(singleColumnValueFilter);
         final ResultScanner scanner = table.getScanner(scan);
         final Iterator<Result> iterator = scanner.iterator();
@@ -170,13 +170,14 @@ public class ReadOrWriteData {
                 final String rowKey = getRowName(current);
                 getQualifierName(current);
                 final String value = getValue(current);
-                //System.out.printf("Got value key=%s value=%s\n", rowKey, value);
+                // System.out.printf("Got value key=%s value=%s\n", rowKey, value);
             }
         }
         System.out.printf("Records read %s \n", count);
     }
 
-    private static void deleteRow(final String rowKey, final Table table, final HBaseAdmin admin, final TableName tableName) throws IOException {
+    private static void deleteRow(final String rowKey, final Table table, final HBaseAdmin admin,
+            final TableName tableName) throws IOException {
         final Delete delete = new Delete(rowKey.getBytes());
         table.delete(delete);
         table.close();
@@ -185,11 +186,11 @@ public class ReadOrWriteData {
     }
 
     private static void putData(final Table table,
-                                final String rowKey,
-                                final String fname,
-                                final String lname,
-                                final String street,
-                                final String country) throws IOException {
+            final String rowKey,
+            final String fname,
+            final String lname,
+            final String street,
+            final String country) throws IOException {
         final Put put = new Put(Bytes.toBytes(rowKey));
         put.addColumn(NAME_CF.getBytes(), FNAME_COL.getBytes(), Bytes.toBytes(fname));
         put.addColumn(NAME_CF.getBytes(), LNAME_COL.getBytes(), Bytes.toBytes(lname));
