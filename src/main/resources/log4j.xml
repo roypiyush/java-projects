@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true"
+                     xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n" />
+        </layout>
+    </appender>
+
+    <!--<appender name="file" class="com.personal.old.log4j.CustomAppender">
+        <param name="File" value="/tmp/log.out" />
+        <layout class="com.personal.old.log4j.CustomPatternLayout">
+            <param name="ConversionPattern"
+                   value="%5p %d{HH:mm:ss,SSS} %F:%L %m%n %throwable{10}" />
+            <param name="maxLength" value="50000" />
+        </layout>
+    </appender>-->
+
+    <category name="org" additivity="false">
+        <priority value="FATAL" />
+    </category>
+    <category name="akka" additivity="false">
+        <priority value="FATAL" />
+    </category>
+    <category name="kafka" additivity="false">
+        <priority value="FATAL" />
+    </category>
+
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref="console" />
+        <!--<appender-ref ref="file" />-->
+    </root>
+
+</log4j:configuration>

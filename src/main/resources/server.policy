@@ -1,0 +1,3 @@
+grant codeBase "file:/home/piyush/workspace/eclipse_workspace/workspace_java/java-projects/target/classes" {
+	permission java.security.AllPermission;
+};
